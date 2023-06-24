@@ -10,20 +10,28 @@ datasource db {
 model User {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   name          String
+  slug          String   @unique
   email         String   @unique
   bio           String
   profile_photo String
+  password      String   @ignore
   Links         Links[]
+
+  @@map("users")
 }
 
 model Links {
-  link_id     String @id @default(auto()) @map("_id") @db.ObjectId
+  link_id     String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   url         String
   description String
   order       Int
+  createdAt   DateTime @default(now())
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @db.ObjectId
+
+  @@map("links")
 }
