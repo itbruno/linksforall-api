@@ -1,10 +1,10 @@
-import { prisma } from '@/services/prismaConnect';
+import { prisma } from '../services/prismaConnect';
 import { User } from '@prisma/client';
 
-type UserOrderBy = 'desc' | 'asc';
+export type UserOrderBy = 'desc' | 'asc';
 
 class UserModel {
-  async findAll(sort: UserOrderBy = 'desc') {
+  async findAll(sort: UserOrderBy) {
     const users = await prisma.user.findMany({ orderBy: {
       id: sort
     } });
@@ -12,7 +12,7 @@ class UserModel {
     return users;
   }
 
-  async findById({id}: User) {
+  async findById(id: User['id']) {
     const user = await prisma.user.findUnique({
       where: {
         id: id
@@ -62,4 +62,4 @@ class UserModel {
   }
 }
 
-export { UserModel };
+export default new UserModel();
