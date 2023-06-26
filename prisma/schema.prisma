@@ -12,10 +12,10 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   fullname      String
-  slug          String   @unique
+  slug          String?  @unique
   email         String   @unique
-  bio           String
-  profile_photo String
+  bio           String?
+  profile_photo String?
   password      String
   Links         Links[]
 

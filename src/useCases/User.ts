@@ -22,7 +22,7 @@ class UserModel {
     return user;
   }
 
-  async findByEmail({email}: User) {
+  async findByEmail(email: User['email']) {
     const user = await prisma.user.findUnique({
       where: {
         email: email
@@ -32,9 +32,17 @@ class UserModel {
     return user;
   }
 
-  async create(userData: User) {
+  async create({
+    fullname,
+    password,
+    email
+  }: User) {
     const newUser = await prisma.user.create({
-      data: userData
+      data: {
+        fullname,
+        password,
+        email
+      }
     });
 
     return newUser;
@@ -51,7 +59,7 @@ class UserModel {
     return updatedUser;
   }
 
-  async delete({id}: User) {
+  async delete(id: User['id']) {
     const deletedUser = await prisma.user.delete({
       where: {
         id
