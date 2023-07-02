@@ -1,5 +1,5 @@
 import { exclude } from '../utils/excludeKeys';
-import { User } from '@prisma/client';
+import { Users } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import UserModel, { UserOrderBy } from '../useCases/User';
@@ -14,7 +14,7 @@ class UserController {
     return res.send(users).status(200);
   }
 
-  async show(req: Request<{id: User['id']}>, res: Response) {
+  async show(req: Request<{id: Users['id']}>, res: Response) {
     const { id } = req.params;
 
     const user = await UserModel.findById(id);
@@ -64,7 +64,7 @@ class UserController {
       fullname,
       password,
       profile_photo
-    }: User= req.body;
+    }: Users = req.body;
 
     const userExists = await UserModel.findById(id);
 

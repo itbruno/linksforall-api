@@ -1,29 +1,32 @@
 import { prisma } from '../services/prismaConnect';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, Users } from '@prisma/client';
 
 export type UserOrderBy = 'desc' | 'asc';
 
 class UserModel {
   async findAll(sort: UserOrderBy) {
-    const users = await prisma.user.findMany({ orderBy: {
+    const users = await prisma.users.findMany({ orderBy: {
       id: sort
     } });
 
     return users;
   }
 
-  async findById(id: User['id']) {
-    const user = await prisma.user.findUnique({
+  async findById(id: Users['id']) {
+    const user = await prisma.users.findUnique({
       where: {
         id: id
       },
+      include: {
+        page: true
+      }
     });
 
     return user;
   }
 
-  async findByEmail(email: User['email']) {
-    const user = await prisma.user.findUnique({
+  async findByEmail(email: Users['email']) {
+    const user = await prisma.users.findUnique({
       where: {
         email: email
       }
@@ -36,8 +39,8 @@ class UserModel {
     fullname,
     password,
     email
-  }: Prisma.UserUncheckedCreateInput) {
-    const newUser = await prisma.user.create({
+  }: Prisma.UsersUncheckedCreateInput) {
+    const newUser = await prisma.users.create({
       data: {
         fullname: fullname,
         password,
@@ -48,13 +51,13 @@ class UserModel {
     return newUser;
   }
 
-  async update(userId: User['id'], {
+  async update(userId: Users['id'], {
     fullname,
     email,
     profile_photo,
     password
-  }: Prisma.UserUncheckedUpdateInput) {
-    const updatedUser = await prisma.user.update({
+  }: Prisma.UsersUncheckedUpdateInput) {
+    const updatedUser = await prisma.users.update({
       where: {
         id: userId,
       },
@@ -69,8 +72,8 @@ class UserModel {
     return updatedUser;
   }
 
-  async delete(id: User['id']) {
-    const deletedUser = await prisma.user.delete({
+  async delete(id: Users['id']) {
+    const deletedUser = await prisma.users.delete({
       where: {
         id
       }

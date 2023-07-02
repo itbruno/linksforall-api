@@ -1,11 +1,14 @@
-import { prisma } from '@/services/prismaConnect';
+import { prisma } from '../services/prismaConnect';
 import { Pages, Prisma } from '@prisma/client';
 
 class PageModel {
-  async findById({ id }: Pages) {
+  async findById(id: Pages['id']) {
     const page = await prisma.pages.findUnique({
       where: {
-        id
+        id: id
+      },
+      include: {
+        links: true
       }
     });
 
@@ -53,4 +56,4 @@ class PageModel {
   }
 }
 
-export { PageModel };
+export default new PageModel();
