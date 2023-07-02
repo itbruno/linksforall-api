@@ -1,4 +1,4 @@
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { exclude } from '../utils/excludeKeys';
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
