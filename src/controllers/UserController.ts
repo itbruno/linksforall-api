@@ -19,6 +19,12 @@ class UserController {
 
     const user = await UserModel.findById(id);
 
+    if(!user) {
+      res.status(404).send({
+        error: 'User not found'
+      });
+    }
+
     const userWithoutPassword = user && exclude(user, ['password']);
 
     return res.send(userWithoutPassword).status(200);
@@ -96,15 +102,14 @@ class UserController {
       slug
     });
 
-    try {
-      res.status(204).send({
-        message: 'User updated'
-      });
-    } catch(err) {
-      res.status(500).send({
-        err
-      });
-    }
+    return res.status(204).send();
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    await UserModel.delete(id);
+
+    return res.status(202).send();
   }
 }
 
