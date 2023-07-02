@@ -12,12 +12,12 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   fullname      String
-  slug          String?  @unique
   email         String   @unique
   bio           String?
   profile_photo String?
   password      String
   Links         Links[]
+  Pages         Pages?
 
   @@map("users")
 }
@@ -35,4 +35,12 @@ model Links {
   userId String @db.ObjectId
 
   @@map("links")
+}
+
+model Pages {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  slug String
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
 }

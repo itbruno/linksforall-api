@@ -34,8 +34,7 @@ class UserController {
     const {
       fullname,
       password,
-      email,
-      slug
+      email
     } = req.body;
 
     const hashPassword = await encryptString(password);
@@ -51,8 +50,7 @@ class UserController {
     const newUser = await UserModel.create({
       fullname,
       password: hashPassword,
-      email,
-      slug
+      email
     });
 
     const newUserWithoutPassword = exclude(newUser, ['password']);
@@ -66,8 +64,7 @@ class UserController {
       fullname,
       bio,
       password,
-      profile_photo,
-      slug
+      profile_photo
     }: User= req.body;
 
     const userExists = await UserModel.findById(id);
@@ -98,8 +95,7 @@ class UserController {
       email,
       bio,
       password: hashPassword,
-      profile_photo,
-      slug
+      profile_photo
     });
 
     return res.status(204).send();
