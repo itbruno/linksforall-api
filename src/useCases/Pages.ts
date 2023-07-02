@@ -15,6 +15,19 @@ class PageModel {
     return page;
   }
 
+  async findBySlug(slug: Pages['slug']) {
+    const page = await prisma.pages.findUnique({
+      where: {
+        slug: slug
+      },
+      include: {
+        links: true
+      }
+    });
+
+    return page;
+  }
+
   async create({
     slug,
     userId
@@ -45,7 +58,7 @@ class PageModel {
     return pageToUpdate;
   }
 
-  async delete({ id }: Pages) {
+  async delete(id: Pages['id']) {
     const pageToDelete = await prisma.pages.delete({
       where: {
         id

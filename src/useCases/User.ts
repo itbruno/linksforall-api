@@ -6,8 +6,8 @@ export type UserOrderBy = 'desc' | 'asc';
 class UserModel {
   async findAll(sort: UserOrderBy) {
     const users = await prisma.users.findMany({ orderBy: {
-      id: sort
-    } });
+      id: sort,
+    }});
 
     return users;
   }

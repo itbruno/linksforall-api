@@ -30,7 +30,7 @@ model Links {
   createdAt   DateTime @default(now())
   type        String
 
-  page   Pages  @relation(fields: [pageId], references: [id])
+  page   Pages  @relation(fields: [pageId], references: [id], onDelete: Cascade)
   pageId String @db.ObjectId
 
   @@map("links")
@@ -41,7 +41,7 @@ model Pages {
   slug     String  @unique
   settings String? @default("{}")
 
-  User   Users  @relation(fields: [userId], references: [id])
+  User   Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique @db.ObjectId
 
   links Links[]

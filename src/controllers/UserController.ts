@@ -10,8 +10,9 @@ class UserController {
     const { orderBy } = req.query;
 
     const users = await UserModel.findAll(orderBy as UserOrderBy ?? 'desc');
+    const usersWithoutPassword = users.map(user => exclude(user, ['password']));
 
-    return res.send(users).status(200);
+    return res.send(usersWithoutPassword).status(200);
   }
 
   async show(req: Request<{id: Users['id']}>, res: Response) {
