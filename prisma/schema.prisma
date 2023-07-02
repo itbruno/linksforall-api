@@ -13,7 +13,6 @@ model User {
   updatedAt     DateTime @updatedAt
   fullname      String
   email         String   @unique
-  bio           String?
   profile_photo String?
   password      String
   Links         Links[]
@@ -38,8 +37,9 @@ model Links {
 }
 
 model Pages {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  slug String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String  @unique
+  settings String? @default("{}")
 
   User   User   @relation(fields: [userId], references: [id])
   userId String @unique @db.ObjectId

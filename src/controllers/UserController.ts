@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import UserModel, { UserOrderBy } from '../useCases/User';
-import { encryptString } from '../services/encryptString';
+import { encryptString } from '../utils/encryptString';
 
 class UserController {
   async index(req: Request, res: Response) {
@@ -62,7 +62,6 @@ class UserController {
     const {
       email,
       fullname,
-      bio,
       password,
       profile_photo
     }: User= req.body;
@@ -91,9 +90,8 @@ class UserController {
     const hashPassword = await encryptString(password);
 
     await UserModel.update(id, {
-      fullname,
       email,
-      bio,
+      fullname,
       password: hashPassword,
       profile_photo
     });

@@ -1,5 +1,5 @@
 import { prisma } from '../services/prismaConnect';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 export type UserOrderBy = 'desc' | 'asc';
 
@@ -36,10 +36,10 @@ class UserModel {
     fullname,
     password,
     email
-  }: User) {
+  }: Prisma.UserUncheckedCreateInput) {
     const newUser = await prisma.user.create({
       data: {
-        fullname,
+        fullname: fullname,
         password,
         email
       }
@@ -51,10 +51,9 @@ class UserModel {
   async update(userId: User['id'], {
     fullname,
     email,
-    bio,
     profile_photo,
     password
-  }: User) {
+  }: Prisma.UserUncheckedUpdateInput) {
     const updatedUser = await prisma.user.update({
       where: {
         id: userId,
@@ -62,7 +61,6 @@ class UserModel {
       data: {
         fullname,
         email,
-        bio,
         profile_photo,
         password
       }
