@@ -1,9 +1,9 @@
-import bcrypt from 'bcrypt';
 import { exclude } from '../utils/excludeKeys';
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import UserModel, { UserOrderBy } from '../useCases/User';
+import { encryptString } from '../services/encryptString';
 
 class UserController {
   async index(req: Request, res: Response) {
@@ -29,10 +29,10 @@ class UserController {
       fullname,
       password,
       email,
+      slug
     } = req.body;
 
-    const salt = await bcrypt.genSalt(12);
-    const hashPassword = await bcrypt.hash(password, salt);
+    const hashPassword = await encryptString(password);
 
     const userAlreadyExists = await UserModel.findByEmail(email);
 
@@ -45,12 +45,66 @@ class UserController {
     const newUser = await UserModel.create({
       fullname,
       password: hashPassword,
-      email
+      email,
+      slug
     });
 
     const newUserWithoutPassword = exclude(newUser, ['password']);
-
     return res.send(newUserWithoutPassword).status(201);
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } =  req.params;
+    const {
+      email,
+      fullname,
+      bio,
+      password,
+      profile_photo,
+      slug
+    }: User= req.body;
+
+    const userExists = await UserModel.findById(id);
+
+    if(!userExists) {
+      return res.status(404).send({
+        error: 'User not found'
+      });
+    }
+
+    if(!fullname) {
+      return res.status(400).send({
+        error: 'Fullname is required'
+      });
+    }
+
+    const userEmail = await UserModel.findByEmail(email);
+    if(userEmail && id !== userEmail.id) {
+      return res.status(400).send({
+        error: 'This e-mail is already in use',
+      });
+    }
+
+    const hashPassword = await encryptString(password);
+
+    await UserModel.update(id, {
+      fullname,
+      email,
+      bio,
+      password: hashPassword,
+      profile_photo,
+      slug
+    });
+
+    try {
+      res.status(204).send({
+        message: 'User updated'
+      });
+    } catch(err) {
+      res.status(500).send({
+        err
+      });
+    }
   }
 }
 

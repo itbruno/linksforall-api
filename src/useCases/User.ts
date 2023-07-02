@@ -35,23 +35,25 @@ class UserModel {
   async create({
     fullname,
     password,
-    email
+    email,
+    slug
   }: User) {
     const newUser = await prisma.user.create({
       data: {
         fullname,
         password,
-        email
+        email,
+        slug
       }
     });
 
     return newUser;
   }
 
-  async update(userData: User) {
+  async update(userId: User['id'], userData: User) {
     const updatedUser = await prisma.user.update({
       where: {
-        id: userData.id,
+        id: userId,
       },
       data: userData
     });
