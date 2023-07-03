@@ -6,13 +6,20 @@ class PageModel {
     const page = await prisma.pages.findUnique({
       where: {
         id: id
-      },
-      include: {
-        links: true
       }
     });
 
     return page;
+  }
+
+  async findLinks(id: Pages['id']) {
+    const link = await prisma.links.findMany({
+      where: {
+        pageId: id
+      }
+    });
+
+    return link;
   }
 
   async findBySlug(slug: Pages['slug']) {
@@ -20,9 +27,6 @@ class PageModel {
       where: {
         slug: slug
       },
-      include: {
-        links: true
-      }
     });
 
     return page;

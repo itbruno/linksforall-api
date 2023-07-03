@@ -19,6 +19,20 @@ class PageController {
     return res.status(200).send(page);
   }
 
+  async links(req: Request<{id: Pages['id']}>, res: Response) {
+    const { id } = req.params;
+
+    const page = await PageModel.findLinks(id);
+
+    if(!page) {
+      res.status(404).send({
+        error: 'Page not found'
+      });
+    }
+
+    return res.status(200).send(page);
+  }
+
   async store(req: Request, res: Response) {
     const {
       slug,
