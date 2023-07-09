@@ -2,6 +2,7 @@ import { Router } from 'express';
 import UserController from './controllers/UserController';
 import PageController from './controllers/PageController';
 import LinkController from './controllers/LinkController';
+import AuthController from './controllers/AuthController';
 
 const router = Router();
 
@@ -23,5 +24,8 @@ router.get('/links/:id', LinkController.show);
 router.post('/links', LinkController.store);
 router.put('/links/:id', LinkController.update);
 router.delete('/links/:id', LinkController.delete);
+
+// Auth
+router.post('/auth', AuthController.authenticate);
 
 export default router;
