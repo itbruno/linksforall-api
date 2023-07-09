@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import UserModel from '../useCases/User';
+import { exclude } from '@/utils/excludeKeys';
 
 class AuthController {
   async authenticate(req: Request, res: Response) {
@@ -32,7 +33,11 @@ class AuthController {
     });
 
     return res.status(200).send({
-      userId: user.id,
+      user: {
+        id: user.id,
+        name: user.fullname,
+        profile_photo: user.profile_photo
+      },
       token,
     });
 

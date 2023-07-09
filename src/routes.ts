@@ -13,20 +13,20 @@ router.get('/users/:id', authMiddleware, UserController.show);
 router.put('/users/:id', authMiddleware, UserController.update);
 router.delete('/users/:id', authMiddleware, UserController.delete);
 
-// Signup
-router.post('/users', UserController.store);
-
 // Pages routes
-router.post('/pages', PageController.store);
-router.get('/pages/:id', PageController.show);
-router.put('/pages/:id', PageController.update);
-router.get('/pages/:id/links', PageController.links);
+router.post('/pages', authMiddleware, PageController.store);
+router.get('/pages/:id', authMiddleware, PageController.show);
+router.put('/pages/:id', authMiddleware, PageController.update);
+router.get('/pages/:id/links', authMiddleware, PageController.links);
 
 // Links routes
 router.get('/links/:id', LinkController.show);
 router.post('/links', LinkController.store);
 router.put('/links/:id', LinkController.update);
 router.delete('/links/:id', LinkController.delete);
+
+// Create new user
+router.post('/users', UserController.store);
 
 // Auth
 router.post('/auth', AuthController.authenticate);
