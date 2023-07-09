@@ -19,7 +19,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const data = jwt.verify(token, String(process.env.AUTH_TOKEN));
     const { id } = data as TokenPayloadProps;
-    res.set('userId', id);
+    res.setHeader('userId', id);
 
     return next();
   } catch {

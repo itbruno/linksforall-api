@@ -3,15 +3,18 @@ import UserController from './controllers/UserController';
 import PageController from './controllers/PageController';
 import LinkController from './controllers/LinkController';
 import AuthController from './controllers/AuthController';
+import { authMiddleware } from './middlewares/authMiddleware';
 
 const router = Router();
 
 // User routes
-router.get('/users', UserController.index);
-router.get('/users/:id', UserController.show);
+router.get('/users', authMiddleware, UserController.index);
+router.get('/users/:id', authMiddleware, UserController.show);
+router.put('/users/:id', authMiddleware, UserController.update);
+router.delete('/users/:id', authMiddleware, UserController.delete);
+
+// Signup
 router.post('/users', UserController.store);
-router.put('/users/:id', UserController.update);
-router.delete('/users/:id', UserController.delete);
 
 // Pages routes
 router.post('/pages', PageController.store);
