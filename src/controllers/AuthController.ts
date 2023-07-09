@@ -28,7 +28,7 @@ class AuthController {
       });
     }
 
-    const token = jwt.sign({ id: user.id }, String(process.env.AUTH_TOKEN), {
+    const token = jwt.sign({ id: user.id }, process.env.AUTH_TOKEN ?? '', {
       expiresIn: '1d'
     });
 

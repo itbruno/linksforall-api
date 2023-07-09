@@ -17,7 +17,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const token = authorization.replace('Bearer', '').trim();
 
   try {
-    const data = jwt.verify(token, String(process.env.AUTH_TOKEN));
+    const data = jwt.verify(token, process.env.AUTH_TOKEN ?? '');
     const { id } = data as TokenPayloadProps;
     res.setHeader('userId', id);
 
