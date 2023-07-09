@@ -1,4 +1,4 @@
-import { prisma } from '../services/prismaConnect';
+import { prisma } from '@/services/prismaConnect';
 import { Links, Prisma } from '@prisma/client';
 
 class LinkModel {

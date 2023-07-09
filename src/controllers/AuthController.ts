@@ -2,8 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import UserModel from '../useCases/User';
-import { exclude } from '@/utils/excludeKeys';
+import UserModel from '@/useCases/User';
 
 class AuthController {
   async authenticate(req: Request, res: Response) {

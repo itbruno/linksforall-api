@@ -1,4 +1,4 @@
-import { prisma } from '../services/prismaConnect';
+import { prisma } from '@/services/prismaConnect';
 import { Prisma, Users } from '@prisma/client';
 
 export type UserOrderBy = 'desc' | 'asc';
