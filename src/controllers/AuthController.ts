@@ -16,7 +16,7 @@ class AuthController {
 
     if(!user) {
       return res.status(401).send({
-        error: 'Wrong e-mail'
+        error: 'Wrong e-mail or password'
       });
     }
 
@@ -24,7 +24,7 @@ class AuthController {
 
     if(!passwordIsValid) {
       return res.status(401).send({
-        error: 'Wrong password'
+        error: 'Wrong e-mail or password'
       });
     }
 
