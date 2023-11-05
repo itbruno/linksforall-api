@@ -38,6 +38,12 @@ class UserController {
       email
     } = req.body;
 
+    if(email.trim() == '' || password.trim() == '') {
+      return res.status(400).send({
+        error: 'Some fields are missing'
+      });
+    }
+
     const hashPassword = await encryptString(password);
 
     const userAlreadyExists = await UserModel.findByEmail(email);

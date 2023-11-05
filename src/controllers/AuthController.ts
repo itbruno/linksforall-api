@@ -13,6 +13,12 @@ class AuthController {
 
     const user = await UserModel.findByEmail(email);
 
+    if(email.trim() == '' || password.trim() == '') {
+      return res.status(400).send({
+        error: 'Some fields are missing'
+      });
+    }
+
     if(!user) {
       return res.status(401).send({
         error: 'Wrong e-mail or password'
@@ -32,11 +38,6 @@ class AuthController {
     });
 
     return res.status(200).send({
-      user: {
-        id: user.id,
-        name: user.fullname,
-        profile_photo: user.profile_photo
-      },
       token,
     });
 
