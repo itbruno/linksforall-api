@@ -1,9 +1,12 @@
 import express, { ErrorRequestHandler } from 'express';
 import router from './routes';
+import cors from 'cors';
 
 const DEFAULT_PORT = 3001;
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 app.use(router);
 
