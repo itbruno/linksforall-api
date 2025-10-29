@@ -8,6 +8,7 @@ import { authMiddleware } from './middlewares/authMiddleware';
 const router = Router();
 
 // User routes
+router.post('/users', UserController.store);
 router.get('/users', authMiddleware, UserController.index);
 router.get('/users/:id', authMiddleware, UserController.show);
 router.put('/users/:id', authMiddleware, UserController.update);
@@ -24,9 +25,6 @@ router.get('/links/:id', LinkController.show);
 router.post('/links', LinkController.store);
 router.put('/links/:id', LinkController.update);
 router.delete('/links/:id', LinkController.delete);
-
-// Create new user
-router.post('/users', UserController.store);
 
 // Auth
 router.post('/auth', AuthController.authenticate);
