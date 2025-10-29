@@ -4,11 +4,13 @@ import PageController from './controllers/PageController';
 import LinkController from './controllers/LinkController';
 import AuthController from './controllers/AuthController';
 import { authMiddleware } from './middlewares/authMiddleware';
+import { checkUserRoleMiddleware } from './middlewares/checkUserRoleMiddleware';
 
 const router = Router();
 
 // User routes
-router.get('/users', authMiddleware, UserController.index);
+router.post('/users', UserController.store);
+router.get('/users', [authMiddleware, checkUserRoleMiddleware('ADMIN')], UserController.index);
 router.get('/users/:id', authMiddleware, UserController.show);
 router.put('/users/:id', authMiddleware, UserController.update);
 router.delete('/users/:id', authMiddleware, UserController.delete);
@@ -24,9 +26,6 @@ router.get('/links/:id', LinkController.show);
 router.post('/links', LinkController.store);
 router.put('/links/:id', LinkController.update);
 router.delete('/links/:id', LinkController.delete);
-
-// Create new user
-router.post('/users', UserController.store);
 
 // Auth
 router.post('/auth', AuthController.authenticate);
