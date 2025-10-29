@@ -1,6 +1,6 @@
 {
   "name": "linksforall-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -31,7 +31,7 @@
     "@types/cors": "^2.8.15",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "express": "5",
     "jsonwebtoken": "^9.0.1",
     "prisma": "^4.15.0"
   }

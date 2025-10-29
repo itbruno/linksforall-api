@@ -11,6 +11,10 @@ class AuthController {
       email
     } = req.body;
 
+    if(!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET must be set');
+    }
+
     const user = await UserModel.findByEmail(email);
 
     if(email.trim() == '' || password.trim() == '') {
@@ -33,7 +37,7 @@ class AuthController {
       });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.AUTH_TOKEN ?? '', {
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET ?? '', {
       expiresIn: '1d'
     });
 

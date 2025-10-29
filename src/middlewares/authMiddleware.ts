@@ -1,10 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
+declare module 'express' {
+  export interface Request {
+    user?: {
+      id: string,
+      role: 'ADMIN' | 'USER'
+    }
+  }
+}
 interface TokenPayloadProps {
   id: string;
-  iat: number;
-  expires: number;
+  role: 'ADMIN' | 'USER'
 }
 
 function authMiddleware(req: Request, res: Response, next: NextFunction) {
@@ -16,10 +23,19 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
 
   const token = authorization.replace('Bearer', '').trim();
 
+  if(!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET must be set');
+  }
+
   try {
-    const data = jwt.verify(token, process.env.AUTH_TOKEN ?? '');
-    const { id } = data as TokenPayloadProps;
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    const { id, role } = data as TokenPayloadProps;
     res.setHeader('userId', id);
+
+    req.user = {
+      id,
+      role
+    };
 
     return next();
   } catch {

@@ -4,13 +4,19 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function createUser() {
+async function createUser(role?: 'ADMIN' | 'USER') {
+  const data = {
+    email: faker.internet.email(),
+    fullname: faker.person.fullName(),
+    password: (await encryptString('fakepassword'))
+  };
+
+  if(role) {
+    data.role = role;
+  }
+
   const user = await prisma.users.create({
-    data: {
-      email: faker.internet.email(),
-      fullname: faker.person.fullName(),
-      password: (await encryptString(faker.internet.password()))
-    }
+    data
   });
 
   return user;
@@ -29,13 +35,11 @@ async function createPage({userId}: { userId: string}) {
 
 async function seed() {
   const users = await Promise.all([
-    await createUser(),
+    await createUser('ADMIN'),
     await createUser(),
     await createUser(),
     await createUser()
   ]);
-
-  console.log(users[0].id, users[1].id);
 
   const pages = await Promise.all([
     await createPage({ userId: users[0].id}),
