@@ -1,24 +1,7 @@
-import express, { ErrorRequestHandler } from 'express';
-import router from './routes';
-import cors from 'cors';
+import { app } from './app';
 
-const DEFAULT_PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-app.use(router);
-
-const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  console.error(error);
-  res.status(500).send({
-    error: 'Server internal error',
-  });
-
-  next(error);
-};
-
-app.use(errorHandler);
-
-app.listen(DEFAULT_PORT, () => console.log('Server is running at 3001'));
+app.listen(PORT, () => {
+  console.log('Server is running!');
+});

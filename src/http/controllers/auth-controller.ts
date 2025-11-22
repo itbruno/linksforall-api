@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import UserModel from '@/useCases/User';
+import UserModel from '@/use-cases/users-use-case';
 
 class AuthController {
   async authenticate(req: Request, res: Response) {
@@ -49,4 +49,3 @@ class AuthController {
 }
 
 export default new AuthController();
-
