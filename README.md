@@ -1,105 +1,144 @@
 # linksforall-api
 
-Lightweight API for managing users, pages and links built with TypeScript, Express and Prisma (MongoDB).
+REST API for managing users, pages, and links with authentication and role-based authorization. Built with TypeScript, Express, Prisma ORM, and PostgreSQL.
 
-## What you get
+## Tech Stack
 
-- REST endpoints for users, pages and links (see `src/routes.ts`).
-- Prisma ORM configured to use MongoDB (`prisma/schema.prisma`).
-- Development workflow with TypeScript using `tsx` watch.
+- **Runtime**: Node.js (>= 22)
+- **Language**: TypeScript
+- **Framework**: Express 5
+- **Database**: PostgreSQL
+- **ORM**: Prisma
+- **Authentication**: JWT + bcrypt
+- **Testing**: Vitest
+- **Dev Tools**: tsx, ESLint
 
-## Requirements
+## Environment Variables
 
-- Node.js (recommended >= 18)
-- npm or yarn
-- A running MongoDB instance and a connection string
+Create a `.env` file at the project root:
 
-Dev dependencies in this project (installed via package manager):
+```env
+# Database connection
+DATABASE_URL="postgresql://user:password@localhost:5432/database"
 
-- TypeScript
-- tsx (for running TypeScript directly in dev)
-- Prisma and @prisma/client
+# JWT Secret (use a strong random string in production)
+JWT_SECRET="your-secret-key-here"
 
-## Environment variables
+# Optional: Server port (defaults to 3001)
+PORT=3001
 
-Create a `.env` file at the project root with at least the following variable:
+# Optional: Node environment
+NODE_ENV=development
+```
 
-DATABASE_URL="<your mongodb connection string>"
+**Example for Docker Compose database:**
 
-Example (local MongoDB):
+```env
+DATABASE_URL="postgresql://linksforall:linksforall@localhost:5432/linksforal-development"
+JWT_SECRET="your-secret-key-here"
+```
 
-DATABASE_URL="mongodb://localhost:27017/linksforall"
+## Quick Start
 
-If you use a cloud Mongo (MongoDB Atlas) the URL will be different — keep credentials/URI secure.
-
-## Quick setup
-
-1. Install dependencies
+### 1. Clone and install dependencies
 
 ```bash
 npm install
 ```
 
-2. Generate Prisma client
+### 2. Start PostgreSQL with Docker (recommended)
+
+```bash
+docker-compose up -d
+```
+
+This starts a PostgreSQL instance on `localhost:5432` with:
+- Username: `linksforall`
+- Password: `linksforall`
+- Database: `linksforal-development`
+
+### 3. Configure environment variables
+
+Create a `.env` file (see Environment Variables section above)
+
+### 4. Generate Prisma client
 
 ```bash
 npx prisma generate
 ```
 
-3. Push Prisma schema to the database (creates collections)
+### 5. Run database migrations
+
+```bash
+npx prisma migrate dev
+```
+
+Or use `db push` for schema prototyping:
 
 ```bash
 npx prisma db push
 ```
 
-4. (Optional) Seed the database with fake data
+### 6. (Optional) Seed the database
 
 ```bash
 npm run prisma:seed
 ```
 
-5. Run in development (hot-reload)
+This creates 4 users (1 ADMIN, 3 USER) with pages. All users have password: `fakepassword`
+
+### 7. Start development server
 
 ```bash
 npm run dev
 ```
 
-The server listens on port `3001` by default (see `src/server.ts`).
+The server runs on `http://localhost:3001` by default.
 
-## Available npm scripts
+## Available Scripts
 
-- `dev` - run the app in dev mode with `tsx watch src/server.ts`
-- `build` - compile TypeScript to `dist/` with `tsc`
-- `lint` / `lint:fix` - ESLint tasks
-- `prisma:seed` - run the seeding script (`prisma/seed.ts`)
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server with hot-reload |
+| `npm run build` | Compile TypeScript to `dist/` directory |
+| `npm run lint` | Run ESLint on source files |
+| `npm run lint:fix` | Run ESLint with auto-fix |
+| `npm test` | Run tests once |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Generate test coverage report |
+| `npm run test:ui` | Open Vitest UI for interactive testing |
+| `npm run prisma:seed` | Seed database with fake data |
 
-## Prisma + Mongo notes
 
-- The project uses Prisma's MongoDB connector (see `prisma/schema.prisma`).
-- Use `npx prisma db push` to sync the schema to your database. `prisma migrate` has limited/varied support for MongoDB — `db push` is recommended for this project.
+## Prisma Commands
 
-## Minimal contract
+| Command | Description |
+|---------|-------------|
+| `npx prisma studio` | Open Prisma Studio (database GUI) |
+| `npx prisma migrate dev` | Create and apply migrations |
+| `npx prisma migrate deploy` | Apply migrations in production |
+| `npx prisma db push` | Push schema changes (no migration files) |
+| `npx prisma generate` | Generate Prisma Client |
+| `npx prisma db seed` | Run seed script |
 
-- Inputs: HTTP requests to the routes defined in `src/routes.ts`.
-- Outputs: JSON HTTP responses; 500 errors are sent from the generic error handler in `src/server.ts`.
-- Error modes: Uncaught exceptions are logged and return a 500 response.
+## Testing
 
-## Common troubleshooting
+The project uses Vitest for testing with coverage support:
 
-- "PrismaClientNotFoundError" or client generation errors — run:
+```bash
+# Run all tests
+npm test
 
-  ```bash
-  npx prisma generate
-  ```
+# Watch mode for TDD
+npm run test:watch
 
-- If collections do not appear after generation, run:
+# Generate coverage report
+npm run test:coverage
 
-  ```bash
-  npx prisma db push
-  ```
+# Open interactive UI
+npm run test:ui
+```
 
-- If seeding fails, ensure `DATABASE_URL` is correct and reachable, then run:
+## License
 
-  ```bash
-  npm run prisma:seed
-  ```
+ISC

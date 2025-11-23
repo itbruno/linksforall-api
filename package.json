@@ -9,7 +9,11 @@
     "lint": "eslint src/",
     "lint:fix": "eslint --fix-dry-run src/",
     "build": "tsc",
-    "prisma:seed": "tsx prisma/seed.ts"
+    "prisma:seed": "tsx prisma/seed.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "",
@@ -22,10 +26,13 @@
     "@types/node": "^20.19.25",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "@vitest/coverage-v8": "^4.0.13",
+    "@vitest/ui": "^4.0.13",
     "eslint": "^8.57.1",
     "prisma": "^7.0.0",
     "tsx": "^3.14.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",
