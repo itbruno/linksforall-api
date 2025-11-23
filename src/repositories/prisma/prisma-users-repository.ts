@@ -1,4 +1,3 @@
-import { Users } from 'prisma/generated/client';
 import { UsersCreateInput } from 'prisma/generated/models';
 import { UsersRepository } from '../user-repository';
 import { prisma } from '@/lib/prisma';

@@ -1,7 +1,6 @@
 import { UsersCreateInput } from 'prisma/generated/models';
 import { UsersRepository } from '../user-repository';
-import { Users } from 'prisma/generated/client';
-import { Role } from 'prisma/generated/enums';
+import { Role, Users } from 'prisma/generated/client';
 import { randomUUID } from 'node:crypto';
 
 export class InMemoryUsersRepository implements UsersRepository {
