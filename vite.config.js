@@ -12,6 +12,11 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json-summary', 'json'],
       reportOnFailure: true,
+      exclude: [
+        'prisma/generated/**',
+        '**/prisma/generated/**',
+        '**/node_modules/**',
+      ],
     }
   }
 });
