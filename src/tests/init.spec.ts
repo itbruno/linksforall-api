@@ -1,6 +1,6 @@
 import {describe, expect, it } from 'vitest';
 
-describe('Initial testes', () => {
+describe('Initial tests', () => {
   it('should be able to test', () => {
     const doesBeAbleToTest = (enabled: boolean) => {
       if (enabled) {
