@@ -1,9 +1,9 @@
-import { exclude } from '@/utils/excludeKeys';
-import { Users } from '@prisma/client';
+import { exclude } from '@/utils/exclude-keys';
 import { Request, Response } from 'express';
 
-import UserModel, { UserOrderBy } from '@/useCases/User';
-import { encryptString } from '@/utils/encryptString';
+import UserModel, { UserOrderBy } from '@/use-cases/users-use-case';
+import { encryptString } from '@/utils/encrypt-string';
+import { UsersUncheckedUpdateWithoutPageInput } from 'prisma/generated/models';
 
 class UserController {
   async index(req: Request, res: Response) {
@@ -15,7 +15,7 @@ class UserController {
     return res.send(usersWithoutPassword).status(200);
   }
 
-  async show(req: Request<{id: Users['id']}>, res: Response) {
+  async show(req: Request<{id: string}>, res: Response) {
     const { id } = req.params;
 
     const user = await UserModel.findById(id);
@@ -71,7 +71,7 @@ class UserController {
       fullname,
       password,
       profile_photo
-    }: Users = req.body;
+    }: UsersUncheckedUpdateWithoutPageInput = req.body;
 
     const userExists = await UserModel.findById(id);
 
@@ -94,14 +94,18 @@ class UserController {
       });
     }
 
-    const hashPassword = await encryptString(password);
-
-    await UserModel.update(id, {
+    const dataToUpdate:UsersUncheckedUpdateWithoutPageInput = {
       email,
       fullname,
-      password: hashPassword,
       profile_photo
-    });
+    };
+
+    if (password) {
+      const hashPassword = await encryptString(password.toString());
+      dataToUpdate.password = hashPassword;
+    }
+
+    await UserModel.update(id, dataToUpdate);
 
     return res.status(204).send();
   }
@@ -115,4 +119,3 @@ class UserController {
 }
 
 export default new UserController();
-

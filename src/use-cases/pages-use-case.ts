@@ -1,4 +1,4 @@
-import { prisma } from '@/services/prismaConnect';
+import { prisma } from '@/lib/prisma';
 import { Pages, Prisma } from '@prisma/client';
 
 class PageModel {
