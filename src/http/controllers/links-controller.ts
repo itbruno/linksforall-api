@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { Links, Prisma } from '@prisma/client';
 
-import LinksModel from '@/useCases/Links';
-import PagesModel from '@/useCases/Pages';
+import LinksModel from '@/use-cases/links-use-case';
+import PagesModel from '@/use-cases/pages-use-case';
 
 class LinkController {
   async show(req: Request<{id: Links['id']}>, res: Response) {

@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
 import { Pages, Prisma } from '@prisma/client';
+import { Request, Response } from 'express';
 
-import UserModel from '@/useCases/User';
-import PageModel from '@/useCases/Pages';
+import PageModel from '@/use-cases/pages-use-case';
+import UserModel from '@/use-cases/users-use-case';
 
 class PageController {
   async show(req: Request<{id: Pages['id']}>, res: Response) {

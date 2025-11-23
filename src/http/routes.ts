@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import UserController from './controllers/UserController';
-import PageController from './controllers/PageController';
-import LinkController from './controllers/LinkController';
-import AuthController from './controllers/AuthController';
-import { authMiddleware } from './middlewares/authMiddleware';
-import { checkUserRoleMiddleware } from './middlewares/checkUserRoleMiddleware';
+import UserController from '@/http/controllers/users-controller';
+import PageController from '@/http/controllers/pages-controller';
+import LinkController from '@/http/controllers/links-controller';
+import AuthController from '@/http/controllers/auth-controller';
+import { authMiddleware } from '@/middlewares/auth-middleware';
+import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
 
 const router = Router();
 

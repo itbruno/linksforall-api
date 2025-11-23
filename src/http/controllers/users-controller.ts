@@ -1,9 +1,9 @@
-import { exclude } from '@/utils/excludeKeys';
+import { exclude } from '@/utils/exclude-keys';
 import { Users } from '@prisma/client';
 import { Request, Response } from 'express';
 
-import UserModel, { UserOrderBy } from '@/useCases/User';
-import { encryptString } from '@/utils/encryptString';
+import UserModel, { UserOrderBy } from '@/use-cases/users-use-case';
+import { encryptString } from '@/utils/encrypt-string';
 
 class UserController {
   async index(req: Request, res: Response) {
@@ -115,4 +115,3 @@ class UserController {
 }
 
 export default new UserController();
-
