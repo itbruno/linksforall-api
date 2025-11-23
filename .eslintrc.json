@@ -16,9 +16,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "rules": {
-      "camelcase": "off",
-      "no-useless-constructor": "off"
-    }
+    "camelcase": "off",
+    "no-useless-constructor": "off"
   }
 }

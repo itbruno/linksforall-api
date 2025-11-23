@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { Links, Prisma } from '@prisma/client';
 
 import LinksModel from '@/use-cases/links-use-case';
 import PagesModel from '@/use-cases/pages-use-case';
+import { LinksUncheckedCreateInput, LinksUncheckedUpdateInput } from 'prisma/generated/models';
 
 class LinkController {
-  async show(req: Request<{id: Links['id']}>, res: Response) {
+  async show(req: Request<{id: string}>, res: Response) {
     const { id } = req.params;
 
     const link = await LinksModel.findById(id);
@@ -27,7 +27,7 @@ class LinkController {
       order,
       type,
       pageId
-    }: Prisma.LinksUncheckedCreateInput = req.body;
+    }: LinksUncheckedCreateInput = req.body;
 
     const page = await PagesModel.findById(pageId);
 
@@ -57,7 +57,7 @@ class LinkController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { title, description, order, type, url }: Prisma.LinksUncheckedUpdateInput = req.body;
+    const { title, description, order, type, url }: LinksUncheckedUpdateInput = req.body;
 
     await LinksModel.update(id, {
       title, description, order, type, url

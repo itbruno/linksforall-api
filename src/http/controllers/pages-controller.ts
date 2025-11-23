@@ -1,11 +1,12 @@
-import { Pages, Prisma } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import PageModel from '@/use-cases/pages-use-case';
 import UserModel from '@/use-cases/users-use-case';
+import { Pages } from 'prisma/generated/client';
+import { PagesUncheckedCreateInput } from 'prisma/generated/models';
 
 class PageController {
-  async show(req: Request<{id: Pages['id']}>, res: Response) {
+  async show(req: Request<{id: string}>, res: Response) {
     const { id } = req.params;
 
     const page = await PageModel.findById(id);
@@ -19,7 +20,7 @@ class PageController {
     return res.status(200).send(page);
   }
 
-  async links(req: Request<{id: Pages['id']}>, res: Response) {
+  async links(req: Request<{id: string}>, res: Response) {
     const { id } = req.params;
 
     const page = await PageModel.findLinks(id);
@@ -38,7 +39,7 @@ class PageController {
       slug,
       settings,
       userId
-    }: Prisma.PagesUncheckedCreateInput = req.body;
+    }: PagesUncheckedCreateInput = req.body;
 
     const getUserId = await UserModel.findById(userId);
 

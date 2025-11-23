@@ -7,7 +7,7 @@ yarn-error.log*
 .pnp.*
 .DS_Store
 
-prisma/migrations/
 prisma/client/
+prisma/generated/
 
 .DS_Store
