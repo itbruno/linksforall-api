@@ -29,6 +29,6 @@ describe('User profile use case', () => {
       getUserProfile.execute({
         id: 'non-existent-id'
       })
-    ).rejects.toThrow();
+    ).rejects.toThrow('User doesn\'t exists');
   });
 });

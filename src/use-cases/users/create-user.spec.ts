@@ -31,6 +31,6 @@ describe('Create User use case', () => {
 
     await expect(
       createUserUseCase.execute(userData)
-    ).rejects.toThrow();
+    ).rejects.toThrow('E-mail already exists');
   });
 });
