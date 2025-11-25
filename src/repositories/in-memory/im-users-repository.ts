@@ -1,10 +1,10 @@
-import { UsersCreateInput } from 'prisma/generated/models';
+import { UsersCreateInput, UsersUncheckedUpdateWithoutPageInput, UsersUpdateInput } from 'prisma/generated/models';
 import { UsersRepository } from '../users-repository';
 import { Role, Users } from 'prisma/generated/client';
 import { randomUUID } from 'node:crypto';
 
 export class InMemoryUsersRepository implements UsersRepository {
-  public users: Users[] = [];
+  private users: Users[] = [];
 
   async create(data: UsersCreateInput) {
     const user = {
@@ -30,5 +30,23 @@ export class InMemoryUsersRepository implements UsersRepository {
   async findById(id: string) {
     const user = this.users.find(user => user.id === id) || null;
     return user;
+  }
+
+  async update(id: string, data: UsersUpdateInput) {
+    const updatedUser: UsersUpdateInput = {
+      id,
+      fullname: data.fullname,
+      password: data.password,
+      profile_photo: data.profile_photo,
+      role: data.role,
+      createdAt: data.createdAt,
+      email: data.email,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.users = this.users.map(user => user.id === id ? updatedUser : user) as Users[];
+    const user = this.users.find(user => user.id === id);
+
+    return user as Users;
   }
 }

@@ -1,6 +1,7 @@
-import { UsersCreateInput } from 'prisma/generated/models';
+import { UsersCreateInput, UsersUncheckedUpdateWithoutPageInput, UsersUpdateInput } from 'prisma/generated/models';
 import { UsersRepository } from '../users-repository';
 import { prisma } from '@/lib/prisma';
+import { Users } from 'prisma/generated/client';
 
 export class PrismaUsersRepository implements UsersRepository {
   async create(data: UsersCreateInput) {
@@ -25,7 +26,9 @@ export class PrismaUsersRepository implements UsersRepository {
 
   async findById(id: string){
     const user = await prisma.users.findUnique({
-      where: { id }
+      where: {
+        id
+      }
     });
 
     if (user) {
@@ -33,5 +36,19 @@ export class PrismaUsersRepository implements UsersRepository {
     }
 
     return null;
+  }
+
+  async update(id: string, dataToUpdate: UsersUpdateInput) {
+    const updatedUser = await prisma.users.update({
+      where: {
+        id
+      },
+      data: {
+        updatedAt: new Date().toISOString(),
+        ...dataToUpdate
+      }
+    });
+
+    return updatedUser;
   }
 }
