@@ -1,5 +1,5 @@
 import { UsersCreateInput } from 'prisma/generated/models';
-import { UsersRepository } from '../user-repository';
+import { UsersRepository } from '../users-repository';
 import { Role, Users } from 'prisma/generated/client';
 import { randomUUID } from 'node:crypto';
 
@@ -23,8 +23,12 @@ export class InMemoryUsersRepository implements UsersRepository {
   }
 
   async findByEmail(email: string) {
-    const getUserByEmail = this.users.find(user => user.email === email) || null;
-    return getUserByEmail;
+    const user = this.users.find(user => user.email === email) || null;
+    return user;
   }
 
+  async findById(id: string) {
+    const user = this.users.find(user => user.id === id) || null;
+    return user;
+  }
 }

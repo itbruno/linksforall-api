@@ -1,5 +1,5 @@
 import { UsersCreateInput } from 'prisma/generated/models';
-import { UsersRepository } from '../user-repository';
+import { UsersRepository } from '../users-repository';
 import { prisma } from '@/lib/prisma';
 
 export class PrismaUsersRepository implements UsersRepository {
@@ -12,14 +12,24 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   async findByEmail(email: string) {
-    const userByEmail = await prisma.users.findUnique({
-      where: {
-        email
-      }
+    const user = await prisma.users.findUnique({
+      where: { email }
     });
 
-    if (userByEmail) {
-      return userByEmail;
+    if (user) {
+      return user;
+    }
+
+    return null;
+  }
+
+  async findById(id: string){
+    const user = await prisma.users.findUnique({
+      where: { id }
+    });
+
+    if (user) {
+      return user;
     }
 
     return null;
