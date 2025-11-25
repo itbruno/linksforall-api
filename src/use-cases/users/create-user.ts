@@ -1,4 +1,4 @@
-import { UsersRepository } from '@/repositories/user-repository';
+import { UsersRepository } from '@/repositories/users-repository';
 import { encryptString } from '@/utils/encrypt-string';
 import { Users } from 'prisma/generated/client';
 
