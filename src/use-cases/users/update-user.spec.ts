@@ -50,7 +50,7 @@ describe('Update User use case', () => {
     expect(doesNewPasswordHashed).toBeTruthy();
   });
 
-  it('should be able to update email from another existing user email', async () => {
+  it('should not be able to update email from existing email', async () => {
     const inMemoryUserRepository = new InMemoryUsersRepository();
     const updateUserUseCase = new UpdateUserUseCase(inMemoryUserRepository);
 
@@ -74,5 +74,17 @@ describe('Update User use case', () => {
         email: existingEmail
       }
     })).rejects.toThrow('Invalid e-mail');
+  });
+
+  it('should not be able to update user with non existing id', async () => {
+    const inMemoryUserRepository = new InMemoryUsersRepository();
+    const updateUserUseCase = new UpdateUserUseCase(inMemoryUserRepository);
+
+    await expect(updateUserUseCase.execute({
+      id: 'some-non-user-id',
+      data: {
+        email: faker.internet.email()
+      }
+    })).rejects.toThrow('User doesn\'t exists');
   });
 });
