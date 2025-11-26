@@ -1,5 +1,4 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/im-users-repository';
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository';
 import { encryptString } from '@/utils/encrypt-string';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { describe, expect, it } from 'vitest';
@@ -7,7 +6,7 @@ import { DeleteUserUseCase } from './delete-user';
 
 describe('Delete user Use Case', () => {
   it('Should be able to delete an user', async() => {
-    const usersRepository = new PrismaUsersRepository();
+    const usersRepository = new InMemoryUsersRepository();
     const deleteUserUseCase = new DeleteUserUseCase(usersRepository);
 
     const user = await usersRepository.create({
