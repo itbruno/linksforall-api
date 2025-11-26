@@ -49,4 +49,10 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return user as Users;
   }
+
+  async delete(id: string) {
+    const listWithDeletedUser = this.users.filter(user => user.id !== id);
+
+    this.users = listWithDeletedUser;
+  }
 }

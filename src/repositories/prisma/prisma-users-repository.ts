@@ -1,7 +1,6 @@
-import { UsersCreateInput, UsersUncheckedUpdateWithoutPageInput, UsersUpdateInput } from 'prisma/generated/models';
-import { UsersRepository } from '../users-repository';
 import { prisma } from '@/lib/prisma';
-import { Users } from 'prisma/generated/client';
+import { UsersCreateInput, UsersUpdateInput } from 'prisma/generated/models';
+import { UsersRepository } from '../users-repository';
 
 export class PrismaUsersRepository implements UsersRepository {
   async create(data: UsersCreateInput) {
@@ -50,5 +49,13 @@ export class PrismaUsersRepository implements UsersRepository {
     });
 
     return updatedUser;
+  }
+
+  async delete(id: string) {
+    prisma.users.delete({
+      where: {
+        id
+      }
+    });
   }
 }
