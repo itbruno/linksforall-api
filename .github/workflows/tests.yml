@@ -18,6 +18,10 @@ jobs:
         node-version: '22.x'
     - name: 'Install Deps'
       run: npm install
+    - name: Set fake DATABASE_URL
+      run: echo "DATABASE_URL=\"file:./dev.db\"" >> .env
+    - name: Generate Prisma Client
+      run: npx prisma generate
     - name: 'Test'
       run: npx vitest --coverage.enabled true
     - name: 'Report Coverage'

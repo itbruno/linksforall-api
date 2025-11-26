@@ -10,6 +10,7 @@
     "lint:fix": "eslint --fix-dry-run src/",
     "build": "tsc",
     "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -32,12 +33,12 @@
     "prisma": "^7.0.0",
     "tsx": "^3.14.0",
     "typescript": "^5.9.3",
+    "@types/cors": "^2.8.19",
     "vitest": "^4.0.13"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
-    "@types/cors": "^2.8.19",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
