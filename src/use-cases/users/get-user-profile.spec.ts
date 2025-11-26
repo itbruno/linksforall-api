@@ -1,6 +1,7 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/im-users-repository';
-import { describe, expect, it } from 'vitest';
 import { faker } from '@faker-js/faker/locale/pt_BR';
+import { describe, expect, it } from 'vitest';
+import { ResourceNotFoundError } from '../errors/not-found-error';
 import { GetUserProfileUseCase } from './get-user-profile';
 
 describe('User profile use case', () => {
@@ -29,6 +30,6 @@ describe('User profile use case', () => {
       getUserProfile.execute({
         id: 'non-existent-id'
       })
-    ).rejects.toThrow('User doesn\'t exists');
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

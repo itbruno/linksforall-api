@@ -1,4 +1,5 @@
 import { UsersRepository } from '@/repositories/users-repository';
+import {ResourceNotFoundError } from '../errors/not-found-error';
 
 export class DeleteUserUseCase {
   constructor(private usersRepository: UsersRepository) { }
@@ -7,7 +8,7 @@ export class DeleteUserUseCase {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw Error('User doesn\t exists');
+      throw new ResourceNotFoundError('User doesn\'t exists');
     }
 
     return await this.usersRepository.delete(id);

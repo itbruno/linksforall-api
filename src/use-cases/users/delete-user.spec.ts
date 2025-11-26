@@ -2,6 +2,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/im-users-repos
 import { encryptString } from '@/utils/encrypt-string';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { describe, expect, it } from 'vitest';
+import { ResourceNotFoundError } from '../errors/not-found-error';
 import { DeleteUserUseCase } from './delete-user';
 
 describe('Delete user Use Case', () => {
@@ -22,6 +23,6 @@ describe('Delete user Use Case', () => {
     const usersRepository = new InMemoryUsersRepository();
     const deleteUserUseCase = new DeleteUserUseCase(usersRepository);
 
-    await expect(deleteUserUseCase.execute('non-existing-user-id')).rejects.toThrow();
+    await expect(deleteUserUseCase.execute('non-existing-user-id')).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

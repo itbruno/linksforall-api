@@ -3,6 +3,8 @@ import { describe, expect, it} from 'vitest';
 import { UpdateUserUseCase } from './update-user';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/im-users-repository';
+import { ResourceNotFoundError } from '../errors/not-found-error';
+import { EmailAlreadyExistsError } from '../errors/email-already-exists-error';
 
 describe('Update User use case', () => {
   it('should be able to update name and email', async () => {
@@ -73,7 +75,7 @@ describe('Update User use case', () => {
       data: {
         email: existingEmail
       }
-    })).rejects.toThrow('Invalid e-mail');
+    })).rejects.toBeInstanceOf(EmailAlreadyExistsError);
   });
 
   it('should not be able to update user with non existing id', async () => {
@@ -85,6 +87,6 @@ describe('Update User use case', () => {
       data: {
         email: faker.internet.email()
       }
-    })).rejects.toThrow('User doesn\'t exists');
+    })).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

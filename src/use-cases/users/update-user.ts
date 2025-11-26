@@ -1,7 +1,9 @@
 import { UsersRepository } from '@/repositories/users-repository';
 import { encryptString } from '@/utils/encrypt-string';
 import { Users } from 'prisma/generated/client';
-import { NestedStringFilter, UsersUpdateWithoutPageInput } from 'prisma/generated/models';
+import { UsersUpdateWithoutPageInput } from 'prisma/generated/models';
+import { ResourceNotFoundError } from '../errors/not-found-error';
+import { EmailAlreadyExistsError } from '../errors/email-already-exists-error';
 
 interface UpdateUserUseCaseRequest {
   id: string;
@@ -19,12 +21,12 @@ export class UpdateUserUseCase {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      throw Error('User doesn\'t exists');
+      throw new ResourceNotFoundError('User doesn\'t exists');
     }
 
     if (data.email && data.email !== user.email) {
       const doesEmaiInUse = await this.usersRepository.findByEmail(data.email as string);
-      if (doesEmaiInUse) throw Error('Invalid e-mail');
+      if (doesEmaiInUse) throw new EmailAlreadyExistsError();
     }
 
     if (data.password) {

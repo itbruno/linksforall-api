@@ -1,6 +1,7 @@
 import { UsersRepository } from '@/repositories/users-repository';
 import { encryptString } from '@/utils/encrypt-string';
 import { Users } from 'prisma/generated/client';
+import { EmailAlreadyExistsError } from '../errors/email-already-exists-error';
 
 interface CreateUserUseCaseRequest {
   fullname: string;
@@ -19,7 +20,7 @@ export class CreateUserUseCase {
     const doesUserAlreadyExists = await this.usersRepository.findByEmail(data.email);
 
     if (doesUserAlreadyExists) {
-      throw new Error('E-mail already exists');
+      throw new EmailAlreadyExistsError();
     }
 
     const hashPassword = await encryptString(data.password);

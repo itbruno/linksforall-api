@@ -2,6 +2,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/im-users-repos
 import { describe, expect, it } from 'vitest';
 import { CreateUserUseCase } from './create-user';
 import { faker } from '@faker-js/faker/locale/pt_BR';
+import { EmailAlreadyExistsError } from '../errors/email-already-exists-error';
 
 describe('Create User use case', () => {
   it('should be able to create a new user', async () => {
@@ -31,6 +32,6 @@ describe('Create User use case', () => {
 
     await expect(
       createUserUseCase.execute(userData)
-    ).rejects.toThrow('E-mail already exists');
+    ).rejects.toBeInstanceOf(EmailAlreadyExistsError);
   });
 });
