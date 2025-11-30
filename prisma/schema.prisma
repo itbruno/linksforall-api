@@ -27,7 +27,6 @@ model Links {
   title       String
   url         String
   description String
-  order       Int
   createdAt   DateTime @default(now())
   type        String
 
