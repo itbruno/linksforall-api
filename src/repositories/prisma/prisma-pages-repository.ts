@@ -21,4 +21,14 @@ export class PrismaPagesRepository implements PagesRepository {
     return page;
   }
 
+  async findById(id: string) {
+    const page = await prisma.pages.findUnique({
+      where: {
+        id
+      }
+    });
+
+    return page;
+  }
+
 }

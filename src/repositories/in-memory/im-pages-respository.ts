@@ -25,5 +25,7 @@ export class InMemoryPagesRepository implements PagesRepository {
     return page;
   }
 
-
+  async findById(id: string) {
+    return this.pages.find(page => page.id === id) ?? null;
+  }
 }
