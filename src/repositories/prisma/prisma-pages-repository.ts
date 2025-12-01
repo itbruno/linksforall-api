@@ -31,4 +31,12 @@ export class PrismaPagesRepository implements PagesRepository {
     return page;
   }
 
+  async delete(id: string) {
+    await prisma.pages.delete({
+      where: {
+        id
+      }
+    });
+  }
+
 }

@@ -28,4 +28,12 @@ export class InMemoryPagesRepository implements PagesRepository {
   async findById(id: string) {
     return this.pages.find(page => page.id === id) ?? null;
   }
+
+  async delete(id: string) {
+    const page = this.pages.find(item => item.id === id);
+
+    if (page) {
+      this.pages = this.pages.filter(page => page.id !== id);
+    }
+  }
 }
