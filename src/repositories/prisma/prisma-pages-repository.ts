@@ -1,4 +1,4 @@
-import { PagesUncheckedCreateInput } from 'prisma/generated/models';
+import { PagesCreateInput, PagesUncheckedCreateInput, PagesUncheckedUpdateInput, PagesUpdateInput, PagesUpdateWithoutLinksInput } from 'prisma/generated/models';
 import { PagesRepository } from '../pages-repository';
 import { prisma } from '@/lib/prisma';
 
@@ -39,4 +39,20 @@ export class PrismaPagesRepository implements PagesRepository {
     });
   }
 
+  async update(data: {
+    id: string,
+    title: string,
+    description: string,
+    slug: string,
+    settings: string
+  }) {
+    const page = await prisma.pages.update({
+      where: {
+        id: data.id
+      },
+      data
+    });
+
+    return page;
+  }
 }

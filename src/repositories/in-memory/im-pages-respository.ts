@@ -1,7 +1,8 @@
 import { Pages } from 'prisma/generated/client';
-import { PagesUncheckedCreateInput } from 'prisma/generated/models';
+import { PagesUncheckedCreateInput, PagesUncheckedUpdateInput } from 'prisma/generated/models';
 import { PagesRepository } from '../pages-repository';
 import { randomUUID } from 'node:crypto';
+import { describe } from 'vitest';
 
 export class InMemoryPagesRepository implements PagesRepository {
   public pages: Pages[] = [];
@@ -35,5 +36,25 @@ export class InMemoryPagesRepository implements PagesRepository {
     if (page) {
       this.pages = this.pages.filter(page => page.id !== id);
     }
+  }
+
+  async update(data: { id: string, title?: string, description?: string, slug?: string, settings?: string}) {
+    this.pages = this.pages.map((item) => {
+      if (item.id === data.id) {
+        return {
+          id: data.id ?? item.id,
+          title: data.title ?? item.title,
+          description: data.description ?? item.description,
+          settings: data.settings ?? item.settings,
+          slug: data.slug ?? item.slug,
+          userId: item.userId
+        };
+      }
+
+      return item;
+    });
+
+    const currentPageIndex = this.pages.findIndex(item => item.id === data.id);
+    return this.pages[currentPageIndex];
   }
 }
