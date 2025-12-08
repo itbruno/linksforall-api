@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { CreatePageUseCase } from './create-page';
 import { InMemoryPagesRepository } from '@/repositories/in-memory/im-pages-respository';
-import { PageSlugAlreadyExists } from '../errors/page-slug-already-exists-error';
+import { PageSlugAlreadyExistsError } from '../errors/page-slug-already-exists-error';
 
 
 describe('Create Pages use case', () => {
@@ -21,7 +21,7 @@ describe('Create Pages use case', () => {
     expect(page.id).toEqual(expect.any(String));
   });
 
-  it('should bit be able to create a new page with existing slug', async () => {
+  it('should not be able to create a new page with existing slug', async () => {
     const inMemoryPageRepository = new InMemoryPagesRepository();
     const createPageUseCase = new CreatePageUseCase(inMemoryPageRepository);
 
@@ -37,6 +37,6 @@ describe('Create Pages use case', () => {
       title: faker.lorem.words(5),
       description: faker.lorem.words(20),
       slug: 'my-new-page'
-    })).rejects.toBeInstanceOf(PageSlugAlreadyExists);
+    })).rejects.toBeInstanceOf(PageSlugAlreadyExistsError);
   });
 });

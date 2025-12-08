@@ -1,7 +1,7 @@
-import { prisma } from '@/lib/prisma';
 import { PagesRepository } from '@/repositories/pages-repository';
 import { Pages } from 'prisma/generated/client';
-import { PageSlugAlreadyExists } from '../errors/page-slug-already-exists-error';
+import { PageSlugAlreadyExistsError } from '../errors/page-slug-already-exists-error';
+import { ResourceNotFoundError } from '../errors/not-found-error';
 
 interface CreatePageUseCaseRequest {
   userId: string,
@@ -18,10 +18,13 @@ export class CreatePageUseCase {
   constructor(private pagesRepository: PagesRepository) { }
 
   async execute(data: CreatePageUseCaseRequest): Promise<CreatePageUseCaseResponse> {
+    if (!data.userId) {
+      throw new ResourceNotFoundError('Missing user id');
+    }
     const doesSlugAlreadyExists = await this.pagesRepository.findBySlug(data.slug);
 
     if (doesSlugAlreadyExists) {
-      throw new PageSlugAlreadyExists();
+      throw new PageSlugAlreadyExistsError();
     }
 
     const page = await this.pagesRepository.create(data);

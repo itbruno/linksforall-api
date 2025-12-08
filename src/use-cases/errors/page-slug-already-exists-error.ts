@@ -1,5 +1,5 @@
-export class PageSlugAlreadyExists extends Error {
+export class PageSlugAlreadyExistsError extends Error {
   constructor() {
-    super('E-mail already exists');
+    super('Slug already exists');
   }
 }
