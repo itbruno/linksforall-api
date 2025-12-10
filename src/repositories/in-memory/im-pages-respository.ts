@@ -1,8 +1,7 @@
 import { Pages } from 'prisma/generated/client';
-import { PagesUncheckedCreateInput, PagesUncheckedUpdateInput } from 'prisma/generated/models';
+import { PagesUncheckedCreateInput } from 'prisma/generated/models';
 import { PagesRepository } from '../pages-repository';
 import { randomUUID } from 'node:crypto';
-import { describe } from 'vitest';
 
 export class InMemoryPagesRepository implements PagesRepository {
   public pages: Pages[] = [];
