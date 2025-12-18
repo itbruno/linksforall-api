@@ -1,11 +1,9 @@
-import { describe, expect, it } from 'vitest';
-import { faker } from '@faker-js/faker/locale/pt_BR';
-import { CreateLinkUseCase } from './create-link';
 import { InMemoryLinksRepository } from '@/repositories/in-memory/im-links-repository';
 import { InMemoryPagesRepository } from '@/repositories/in-memory/im-pages-respository';
+import { faker } from '@faker-js/faker/locale/pt_BR';
+import { describe, expect, it } from 'vitest';
 import { ResourceNotFoundError } from '../errors/not-found-error';
-
-
+import { CreateLinkUseCase } from './create-link';
 
 describe('Create links use case', () => {
 
