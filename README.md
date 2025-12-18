@@ -1,6 +1,8 @@
 # linksforall-api
+**Important**: I'm refactoring this project to follow some good practices, tests and some SOLID principles
 
 REST API for managing users, pages, and links with authentication and role-based authorization. Built with TypeScript, Express, Prisma ORM, and PostgreSQL.
+
 
 ## Tech Stack
 
