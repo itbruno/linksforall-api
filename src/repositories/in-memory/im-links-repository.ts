@@ -8,7 +8,7 @@ export class InMemoryLinksRepository implements LinksRepository {
 
   async create(data: LinksUncheckedCreateInput) {
     const link = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       title: data.title,
       description: data.description,
       url: data.url,
@@ -26,8 +26,7 @@ export class InMemoryLinksRepository implements LinksRepository {
     return link;
   }
 
-  async update(data: {
-    id: string,
+  async update(id: string, data: {
     title: string,
     description: string,
     url: string,
@@ -35,9 +34,9 @@ export class InMemoryLinksRepository implements LinksRepository {
     type: string
   }) {
     this.links = this.links.map((item) => {
-      if (item.id === data.id) {
+      if (item.id === id) {
         return {
-          id: item.id,
+          id,
           title: data.title ?? item.title,
           description: data.description ?? item.description,
           url: data.url ?? item.url,
@@ -50,7 +49,7 @@ export class InMemoryLinksRepository implements LinksRepository {
       return item;
     });
 
-    const currentLinkIndex = this.links.findIndex(item => item.id === data.id);
+    const currentLinkIndex = this.links.findIndex(item => item.id === id);
 
     return this.links[currentLinkIndex];
   }

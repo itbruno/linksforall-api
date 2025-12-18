@@ -5,7 +5,7 @@ import { randomUUID } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { DeleteLinkUseCase } from './delete-link';
 
-describe('Create links use case', () => {
+describe('Delete links use case', () => {
 
   it('should be able to delete a link', async () => {
     const inMemoryLinksRepository = new InMemoryLinksRepository();
