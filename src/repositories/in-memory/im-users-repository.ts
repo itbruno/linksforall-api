@@ -1,4 +1,4 @@
-import { UsersCreateInput, UsersUncheckedUpdateWithoutPageInput, UsersUpdateInput } from 'prisma/generated/models';
+import { UsersCreateInput, UsersUpdateInput } from 'prisma/generated/models';
 import { UsersRepository } from '../users-repository';
 import { Role, Users } from 'prisma/generated/client';
 import { randomUUID } from 'node:crypto';

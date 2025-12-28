@@ -27,7 +27,6 @@ model Links {
   title       String
   url         String
   description String
-  order       Int
   createdAt   DateTime @default(now())
   type        String
 
@@ -38,9 +37,11 @@ model Links {
 }
 
 model Pages {
-  id       String  @id @default(uuid())
-  slug     String  @unique
-  settings String? @default("{}")
+  id          String @id @default(uuid())
+  title       String
+  description String
+  slug        String @unique
+  settings    Json?
 
   User   Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
