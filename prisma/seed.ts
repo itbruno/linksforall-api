@@ -1,19 +1,14 @@
-import { encryptString } from '@/utils/encryptString';
+import { prisma } from '@/lib/prisma';
+import { encryptString } from '@/utils/encrypt-string';
 import {fakerPT_BR as faker} from '@faker-js/faker';
-import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
-
-async function createUser(role?: 'ADMIN' | 'USER') {
+async function createUser(role: 'ADMIN' | 'USER'  = 'USER') {
   const data = {
     email: faker.internet.email(),
     fullname: faker.person.fullName(),
-    password: (await encryptString('fakepassword'))
+    password: (await encryptString('123456')),
+    role
   };
-
-  if(role) {
-    data.role = role;
-  }
 
   const user = await prisma.users.create({
     data
@@ -23,10 +18,13 @@ async function createUser(role?: 'ADMIN' | 'USER') {
 }
 
 async function createPage({userId}: { userId: string}) {
+
   const page = await prisma.pages.create({
     data: {
+      title: faker.lorem.words(5),
+      description: faker.lorem.text(),
       slug: faker.lorem.slug(2),
-      userId
+      userId: userId.toString()
     }
   });
 
