@@ -28,7 +28,7 @@ jobs:
       run: npx prisma generate
 
     - name: 'Test'
-      run: npx vitest --coverage.enabled true
+      run: npx vitest --project UNIT --coverage.enabled true
 
     - name: 'Report Coverage'
       if: always()
