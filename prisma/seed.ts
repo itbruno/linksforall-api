@@ -39,7 +39,7 @@ async function seed() {
     await createUser()
   ]);
 
-  const pages = await Promise.all([
+  await Promise.all([
     await createPage({ userId: users[0].id}),
     await createPage({ userId: users[1].id}),
     await createPage({ userId: users[2].id}),

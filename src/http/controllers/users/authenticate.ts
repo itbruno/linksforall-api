@@ -8,7 +8,7 @@ import { env } from '@/env';
 export async function authenticateUserController(req: Request, res: Response) {
   const authenticateBodySchema = z.object({
     email: z.email(),
-    password: z.string().min(3)
+    password: z.string().min(6)
   });
 
   const authenticateUseCase = userAuthenticateUseCase();
