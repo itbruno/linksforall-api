@@ -2,7 +2,6 @@ import { Router } from 'express';
 import UserController from '@/http/controllers/users-controller';
 import PageController from '@/http/controllers/pages-controller';
 import LinkController from '@/http/controllers/links-controller';
-import AuthController from '@/http/controllers/auth-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
 import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
 import { authenticateUserController } from './controllers/users/authenticate';

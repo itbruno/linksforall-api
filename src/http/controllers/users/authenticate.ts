@@ -23,7 +23,7 @@ export async function authenticateUserController(req: Request, res: Response) {
       role: user.role
     }, env.JWT_SECRET);
 
-    return res.status(200).json({token});
+    return res.status(200).json({ token });
 
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
