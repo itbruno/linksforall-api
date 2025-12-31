@@ -13,6 +13,8 @@
     "prisma:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "vitest run --project e2e",
+    "test:e2e:watch": "vitest --project e2e",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
