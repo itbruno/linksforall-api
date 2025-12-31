@@ -33,7 +33,3 @@ jobs:
         env:
           JWT_SECRET: a8f6dnpf6dfapdfyuadyf014117679tghavmvnfk
           DATABASE_URL: "postgresql://linksforall_user:linksforall_password@localhost:5432/linksforall_db?schema=public"
-
-      - name: 'Report Coverage'
-        if: always()
-        uses:  davelosert/vitest-coverage-report-action@v2
