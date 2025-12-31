@@ -25,8 +25,15 @@ jobs:
           node-version: 22.x
           cache: 'npm'
 
-      - run: npm ci
-      - run: npx prisma migrate deploy && npx prisma generate && npm run test:e2e
+      - name: "Intall dependencies"
+        run: npm ci
+
+      - name: Run prisma setup and test
+        run: npx prisma migrate deploy && npx prisma generate && npm run test:e2e
         env:
           JWT_SECRET: a8f6dnpf6dfapdfyuadyf014117679tghavmvnfk
           DATABASE_URL: "postgresql://linksforall_user:linksforall_password@localhost:5432/linksforall_db?schema=public"
+
+      - name: 'Report Coverage'
+        if: always()
+        uses:  davelosert/vitest-coverage-report-action@v2
