@@ -26,6 +26,7 @@ jobs:
           cache: 'npm'
 
       - run: npm ci
+      - run: npx prisma generate
       - run: npm run test:e2e
         env:
           JWT_SECRET: a8f6dnpf6dfapdfyuadyf014117679tghavmvnfk
