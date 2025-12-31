@@ -30,9 +30,7 @@ export default defineConfig({
         extends: true,
         test: {
           name: 'E2E',
-          dir: 'src/http',
-          environment:
-            './prisma/vitest.config.integration.ts',
+          dir: 'src/http'
         },
       },
     ]

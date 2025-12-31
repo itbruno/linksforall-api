@@ -1,10 +1,14 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { app } from '@/app';
 import { prisma } from '@/lib/prisma';
 import { encryptString } from '@/utils/encrypt-string';
 
 describe('Authenticate E2E test', () => {
+  beforeEach(async () => {
+    await prisma.users.deleteMany();
+  });
+
   it('should be able to authenticate', async () => {
 
     // TO-DO: Update to user creation controller
