@@ -5,11 +5,12 @@ import LinkController from '@/http/controllers/links-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
 import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
 import { authenticateUserController } from './controllers/users/authenticate';
+import { createUserController } from './controllers/users/create';
 
 const router = Router();
 
 // User routes
-router.post('/users', UserController.store);
+router.post('/users', createUserController);
 router.get('/users', [authMiddleware, checkUserRoleMiddleware('ADMIN')], UserController.index);
 router.get('/users/:id', authMiddleware, UserController.show);
 router.put('/users/:id', authMiddleware, UserController.update);
