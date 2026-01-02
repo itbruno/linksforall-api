@@ -10,7 +10,7 @@ declare module 'express' {
   }
 }
 interface TokenPayloadProps {
-  id: string;
+  sub: string;
   role: 'ADMIN' | 'USER'
 }
 
@@ -29,11 +29,11 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
 
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
-    const { id, role } = data as TokenPayloadProps;
-    res.setHeader('userId', id);
+    const { sub, role } = data as TokenPayloadProps;
+    res.setHeader('userId', sub);
 
     req.user = {
-      id,
+      id: sub,
       role
     };
 

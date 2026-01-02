@@ -5,15 +5,19 @@ import LinkController from '@/http/controllers/links-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
 import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
 import { authenticateUserController } from './controllers/users/authenticate';
+import { createUserController } from './controllers/users/create';
+import { updateUserController } from './controllers/users/update';
+import { deleteUserController } from './controllers/users/delete';
 
 const router = Router();
 
 // User routes
-router.post('/users', UserController.store);
+router.post('/users', createUserController);
+router.patch('/users/:id', authMiddleware, updateUserController);
+router.delete('/users/:id', authMiddleware, deleteUserController);
+
 router.get('/users', [authMiddleware, checkUserRoleMiddleware('ADMIN')], UserController.index);
 router.get('/users/:id', authMiddleware, UserController.show);
-router.put('/users/:id', authMiddleware, UserController.update);
-router.delete('/users/:id', authMiddleware, UserController.delete);
 
 // Pages routes
 router.post('/pages', authMiddleware, PageController.store);
