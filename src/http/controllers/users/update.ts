@@ -25,7 +25,7 @@ export async function updateUserController(req: Request, res: Response) {
   }
 
   try {
-    await userUseCase.execute({
+    const {user} = await userUseCase.execute({
       id,
       data: {
         fullname,
@@ -35,6 +35,10 @@ export async function updateUserController(req: Request, res: Response) {
       }
     });
 
+    delete user.password;
+
+    return res.status(200).send(user);
+
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return res.status(404).send({ message: err.message });
@@ -42,6 +46,4 @@ export async function updateUserController(req: Request, res: Response) {
 
     return err;
   }
-
-  return res.status(200).send();
 }

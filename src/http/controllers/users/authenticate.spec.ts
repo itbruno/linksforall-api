@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 
 describe('Authenticate E2E test', () => {
   beforeEach(async () => {
-    await prisma.users.deleteMany();
+    await prisma.users.deleteMany({});
   });
 
   it('should be able to authenticate', async () => {

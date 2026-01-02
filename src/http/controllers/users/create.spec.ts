@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 
 describe('Create user test', () => {
   beforeEach(async () => {
-    await prisma.users.deleteMany();
+    await prisma.users.deleteMany({});
   });
 
   it('should be able to create an user', async () => {

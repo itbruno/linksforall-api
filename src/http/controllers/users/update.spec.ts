@@ -1,30 +1,32 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import request from 'supertest';
 import { app } from '@/app';
 import { prisma } from '@/lib/prisma';
+import request from 'supertest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-describe('Delete user test', () => {
+describe('Update user test', () => {
   beforeEach(async () => {
     await prisma.users.deleteMany({});
   });
 
-  it('should be able to delete an user', async () => {
+  it('should be able to update an user', async () => {
     const newUser = await request(app).post('/users').send({
       fullname: 'New user',
-      email: 'admin@linksforall.com',
+      email: 'newuser123@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 
     const authenticatedUser = await request(app).post('/auth').send({
-      email: 'admin@linksforall.com',
+      email: 'newuser123@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 
-    const deletedUserRequest = await request(app).delete(`/users/${newUser.body.id}`)
-      .set({
+    const updateUser = await request(app).patch(`/users/${newUser.body.id}`)
+      .send({
+        email: 'newemail@linksforall.com'
+      }).set({
         'authorization': `Bearer ${authenticatedUser.body.token}`
       });
 
-    expect(deletedUserRequest.status).toEqual(204);
+    expect(updateUser.body.email).toEqual('newemail@linksforall.com');
   });
 });
