@@ -11,7 +11,7 @@ describe('Create user test', () => {
   it('should be able to create an user', async () => {
     const user = await request(app).post('/users').send({
       fullname: 'New user',
-      email: 'newuser@linksforall.com',
+      email: 'createuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 

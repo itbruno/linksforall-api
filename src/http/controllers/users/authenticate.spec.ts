@@ -12,12 +12,12 @@ describe('Authenticate E2E test', () => {
 
     await request(app).post('/users').send({
       fullname: 'Manager',
-      email: 'manager+test@linksforall.com',
+      email: 'authenticateuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 
     const response = await request(app).post('/auth').send({
-      email: 'manager+test@linksforall.com',
+      email: 'authenticateuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 

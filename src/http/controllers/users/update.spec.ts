@@ -11,12 +11,12 @@ describe('Update user test', () => {
   it('should be able to update an user', async () => {
     const newUser = await request(app).post('/users').send({
       fullname: 'New user',
-      email: 'newuser123@linksforall.com',
+      email: 'updateuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 
     const authenticatedUser = await request(app).post('/auth').send({
-      email: 'newuser123@linksforall.com',
+      email: 'updateuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 

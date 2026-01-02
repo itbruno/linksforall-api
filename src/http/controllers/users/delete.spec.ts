@@ -11,12 +11,12 @@ describe('Delete user test', () => {
   it('should be able to delete an user', async () => {
     const newUser = await request(app).post('/users').send({
       fullname: 'New user',
-      email: 'admin@linksforall.com',
+      email: 'deleteuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 
     const authenticatedUser = await request(app).post('/auth').send({
-      email: 'admin@linksforall.com',
+      email: 'deleteuser@linksforall.com',
       password: '123456'
     }).set('Accept', 'application/json');
 
