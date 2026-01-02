@@ -17,6 +17,22 @@ export default defineConfig({
         '**/prisma/generated/**',
         '**/node_modules/**',
       ],
-    }
+    },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'UNIT',
+          dir: 'src/use-cases',
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'E2E',
+          dir: 'src/http'
+        },
+      },
+    ]
   }
 });
