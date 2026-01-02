@@ -11,12 +11,12 @@ export async function createUserController(req: Request, res: Response) {
 
   });
 
-  const authenticateUseCase = createUserUseCase();
+  const userUseCase = createUserUseCase();
 
   const { fullname, email, password } = createUserSchema.parse(req.body);
 
   try {
-    await authenticateUseCase.execute({
+    await userUseCase.execute({
       fullname,
       email,
       password
