@@ -29,5 +29,5 @@ export async function createUserController(req: Request, res: Response) {
     return err;
   }
 
-  return res.status(201);
+  return res.status(201).send();
 }
