@@ -8,7 +8,7 @@ describe('Create user test', () => {
     await prisma.users.deleteMany();
   });
 
-  it('should be able to create', async () => {
+  it('should be able to create an user', async () => {
     const user = await request(app).post('/users').send({
       fullname: 'New user',
       email: 'newuser@linksforall.com',
