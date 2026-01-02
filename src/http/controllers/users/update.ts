@@ -21,7 +21,7 @@ export async function updateUserController(req: Request, res: Response) {
   const userUseCase = updateUserUseCase();
 
   if (id !== req.user?.id && req.user?.role !== 'ADMIN') {
-    return res.status(401).send();
+    return res.status(403).send();
   }
 
   try {

@@ -16,11 +16,15 @@ export async function createUserController(req: Request, res: Response) {
   const { fullname, email, password } = createUserSchema.parse(req.body);
 
   try {
-    await userUseCase.execute({
+    const { user } = await userUseCase.execute({
       fullname,
       email,
       password
     });
+
+    delete user.password;
+
+    return res.status(201).send(user);
 
   } catch (err) {
     if (err instanceof EmailAlreadyExistsError) {
@@ -28,6 +32,4 @@ export async function createUserController(req: Request, res: Response) {
     }
     return err;
   }
-
-  return res.status(201).send();
 }

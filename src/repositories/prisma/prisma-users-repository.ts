@@ -52,7 +52,7 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   async delete(id: string) {
-    prisma.users.delete({
+    await prisma.users.delete({
       where: {
         id
       }
