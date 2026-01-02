@@ -2,9 +2,9 @@ import { Router } from 'express';
 import UserController from '@/http/controllers/users-controller';
 import PageController from '@/http/controllers/pages-controller';
 import LinkController from '@/http/controllers/links-controller';
-import AuthController from '@/http/controllers/auth-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
 import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
+import { authenticateUserController } from './controllers/users/authenticate';
 
 const router = Router();
 
@@ -28,6 +28,6 @@ router.put('/links/:id', LinkController.update);
 router.delete('/links/:id', LinkController.delete);
 
 // Auth
-router.post('/auth', AuthController.authenticate);
+router.post('/auth', authenticateUserController);
 
 export default router;
