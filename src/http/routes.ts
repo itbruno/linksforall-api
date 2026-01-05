@@ -8,6 +8,7 @@ import { authenticateUserController } from './controllers/users/authenticate';
 import { createUserController } from './controllers/users/create';
 import { updateUserController } from './controllers/users/update';
 import { deleteUserController } from './controllers/users/delete';
+import { getUserProfileController } from './controllers/users/profile';
 
 const router = Router();
 
@@ -15,9 +16,7 @@ const router = Router();
 router.post('/users', createUserController);
 router.patch('/users/:id', authMiddleware, updateUserController);
 router.delete('/users/:id', authMiddleware, deleteUserController);
-
-router.get('/users', [authMiddleware, checkUserRoleMiddleware('ADMIN')], UserController.index);
-router.get('/users/:id', authMiddleware, UserController.show);
+router.get('/users/:id', authMiddleware, getUserProfileController);
 
 // Pages routes
 router.post('/pages', authMiddleware, PageController.store);
