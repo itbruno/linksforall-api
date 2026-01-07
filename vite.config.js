@@ -30,7 +30,8 @@ export default defineConfig({
         extends: true,
         test: {
           name: 'E2E',
-          dir: 'src/http'
+          dir: 'src/http',
+          pool: 'threads'
         },
       },
     ]
