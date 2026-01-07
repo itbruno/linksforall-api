@@ -31,7 +31,8 @@ export default defineConfig({
         test: {
           name: 'E2E',
           dir: 'src/http',
-          pool: 'threads'
+          fileParallelism: false,
+          pool: 'forks'
         },
       },
     ]
