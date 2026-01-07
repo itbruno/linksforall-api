@@ -1,14 +1,12 @@
-import { Router } from 'express';
-import UserController from '@/http/controllers/users-controller';
-import PageController from '@/http/controllers/pages-controller';
 import LinkController from '@/http/controllers/links-controller';
+import PageController from '@/http/controllers/pages-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
-import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
+import { Router } from 'express';
 import { authenticateUserController } from './controllers/users/authenticate';
 import { createUserController } from './controllers/users/create';
-import { updateUserController } from './controllers/users/update';
 import { deleteUserController } from './controllers/users/delete';
 import { getUserProfileController } from './controllers/users/profile';
+import { updateUserController } from './controllers/users/update';
 
 const router = Router();
 
