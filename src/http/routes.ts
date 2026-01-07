@@ -1,19 +1,20 @@
-import { Router } from 'express';
-import UserController from '@/http/controllers/users-controller';
-import PageController from '@/http/controllers/pages-controller';
 import LinkController from '@/http/controllers/links-controller';
+import PageController from '@/http/controllers/pages-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
-import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
+import { Router } from 'express';
 import { authenticateUserController } from './controllers/users/authenticate';
+import { createUserController } from './controllers/users/create';
+import { deleteUserController } from './controllers/users/delete';
+import { getUserProfileController } from './controllers/users/profile';
+import { updateUserController } from './controllers/users/update';
 
 const router = Router();
 
 // User routes
-router.post('/users', UserController.store);
-router.get('/users', [authMiddleware, checkUserRoleMiddleware('ADMIN')], UserController.index);
-router.get('/users/:id', authMiddleware, UserController.show);
-router.put('/users/:id', authMiddleware, UserController.update);
-router.delete('/users/:id', authMiddleware, UserController.delete);
+router.post('/users', createUserController);
+router.patch('/users/:id', authMiddleware, updateUserController);
+router.delete('/users/:id', authMiddleware, deleteUserController);
+router.get('/users/:id', authMiddleware, getUserProfileController);
 
 // Pages routes
 router.post('/pages', authMiddleware, PageController.store);
