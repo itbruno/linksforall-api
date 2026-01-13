@@ -1,33 +1,42 @@
-import { Router } from 'express';
-import UserController from '@/http/controllers/users-controller';
-import PageController from '@/http/controllers/pages-controller';
-import LinkController from '@/http/controllers/links-controller';
-import AuthController from '@/http/controllers/auth-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
-import { checkUserRoleMiddleware } from '@/middlewares/check-user-role-middleware';
+import { Router } from 'express';
+import { authenticateUserController } from './controllers/users/authenticate';
+import { createUserController } from './controllers/users/create';
+import { deleteUserController } from './controllers/users/delete';
+import { getUserProfileController } from './controllers/users/profile';
+import { updateUserController } from './controllers/users/update';
+import { createPageController } from './controllers/pages/create';
+import { getPageController } from './controllers/pages/get-page';
+import { updatePageController } from './controllers/pages/update';
+import { deletePageController } from './controllers/pages/delete';
+import { getPageLinksController } from './controllers/pages/get-links';
+import { getLinkController } from './controllers/links/show';
+import { createLinkController } from './controllers/links/create';
+import { updateLinkController } from './controllers/links/update';
+import { deleteLinkController } from './controllers/links/delete';
 
 const router = Router();
 
 // User routes
-router.post('/users', UserController.store);
-router.get('/users', [authMiddleware, checkUserRoleMiddleware('ADMIN')], UserController.index);
-router.get('/users/:id', authMiddleware, UserController.show);
-router.put('/users/:id', authMiddleware, UserController.update);
-router.delete('/users/:id', authMiddleware, UserController.delete);
+router.post('/users', createUserController);
+router.patch('/users/:id', authMiddleware, updateUserController);
+router.delete('/users/:id', authMiddleware, deleteUserController);
+router.get('/users/:id', authMiddleware, getUserProfileController);
 
 // Pages routes
-router.post('/pages', authMiddleware, PageController.store);
-router.get('/pages/:id', authMiddleware, PageController.show);
-router.put('/pages/:id', authMiddleware, PageController.update);
-router.get('/pages/:id/links', authMiddleware, PageController.links);
+router.post('/pages', authMiddleware, createPageController);
+router.get('/pages/:id', authMiddleware, getPageController);
+router.get('/pages/:id/links', authMiddleware, getPageLinksController);
+router.put('/pages/:id', authMiddleware, updatePageController);
+router.delete('/pages/:id', authMiddleware, deletePageController);
 
 // Links routes
-router.get('/links/:id', LinkController.show);
-router.post('/links', LinkController.store);
-router.put('/links/:id', LinkController.update);
-router.delete('/links/:id', LinkController.delete);
+router.get('/links/:id', getLinkController);
+router.post('/links', createLinkController);
+router.put('/links/:id', updateLinkController);
+router.delete('/links/:id', deleteLinkController);
 
 // Auth
-router.post('/auth', AuthController.authenticate);
+router.post('/auth', authenticateUserController);
 
 export default router;

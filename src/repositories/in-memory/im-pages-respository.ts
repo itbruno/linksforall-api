@@ -1,10 +1,11 @@
-import { Pages } from 'prisma/generated/client';
+import { Links, Pages } from 'prisma/generated/client';
 import { PagesUncheckedCreateInput } from 'prisma/generated/models';
 import { PagesRepository } from '../pages-repository';
 import { randomUUID } from 'node:crypto';
 
 export class InMemoryPagesRepository implements PagesRepository {
   public pages: Pages[] = [];
+  public links: Links[] = [];
 
   async findBySlug(slug: string) {
     return this.pages.find(page => page.slug === slug) ?? null;
@@ -27,6 +28,10 @@ export class InMemoryPagesRepository implements PagesRepository {
 
   async findById(id: string) {
     return this.pages.find(page => page.id === id) ?? null;
+  }
+
+  async findPageLinks(pageId: string) {
+    return this.links.filter(link => link.pageId === pageId);
   }
 
   async delete(id: string) {

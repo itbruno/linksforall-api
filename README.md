@@ -1,8 +1,15 @@
 # linksforall-api
-**Important**: I'm refactoring this project to follow some good practices, tests and some SOLID principles
 
-REST API for managing users, pages, and links with authentication and role-based authorization. Built with TypeScript, Express, Prisma ORM, and PostgreSQL.
+REST API for managing users, pages, and links with authentication and role-based authorization. Built with **Clean Architecture** principles, following **SOLID** design patterns with comprehensive test coverage.
 
+
+### Key Features
+- ✅ **Modular Controllers**: Each operation in its own file with dedicated tests
+- ✅ **Clean Architecture**: Separation of concerns (controllers → use cases → repositories)
+- ✅ **SOLID Principles**: Dependency injection, single responsibility
+- ✅ **Comprehensive Testing**: Unit tests + E2E tests with Vitest
+- ✅ **Type Safety**: Full TypeScript with Zod validation
+- ✅ **Security**: JWT authentication, bcrypt hashing, role-based access control
 
 ## Tech Stack
 
@@ -12,33 +19,9 @@ REST API for managing users, pages, and links with authentication and role-based
 - **Database**: PostgreSQL
 - **ORM**: Prisma
 - **Authentication**: JWT + bcrypt
-- **Testing**: Vitest
+- **Validation**: Zod
+- **Testing**: Vitest (Unit + E2E)
 - **Dev Tools**: tsx, ESLint
-
-## Environment Variables
-
-Create a `.env` file at the project root:
-
-```env
-# Database connection
-DATABASE_URL="postgresql://user:password@localhost:5432/database"
-
-# JWT Secret (use a strong random string in production)
-JWT_SECRET="your-secret-key-here"
-
-# Optional: Server port (defaults to 3001)
-PORT=3001
-
-# Optional: Node environment
-NODE_ENV=development
-```
-
-**Example for Docker Compose database:**
-
-```env
-DATABASE_URL="postgresql://linksforall:linksforall@localhost:5432/linksforal-development"
-JWT_SECRET="your-secret-key-here"
-```
 
 ## Quick Start
 
@@ -61,7 +44,21 @@ This starts a PostgreSQL instance on `localhost:5432` with:
 
 ### 3. Configure environment variables
 
-Create a `.env` file (see Environment Variables section above)
+Create a `.env` file at the project root:
+
+```env
+# Database connection
+DATABASE_URL="postgresql://linksforall:linksforall@localhost:5432/linksforal-development"
+
+# JWT Secret (use a strong random string in production)
+JWT_SECRET="your-secret-key-here"
+
+# Optional: Server port (defaults to 3001)
+PORT=3001
+
+# Optional: Node environment
+NODE_ENV=development
+```
 
 ### 4. Generate Prisma client
 
@@ -105,12 +102,76 @@ The server runs on `http://localhost:3001` by default.
 | `npm run build` | Compile TypeScript to `dist/` directory |
 | `npm run lint` | Run ESLint on source files |
 | `npm run lint:fix` | Run ESLint with auto-fix |
-| `npm test` | Run tests once |
-| `npm run test:watch` | Run tests in watch mode |
+| `npm test` | Run unit tests |
+| `npm run test:watch` | Run unit tests in watch mode |
+| `npm run test:e2e` | Run E2E tests |
+| `npm run test:e2e:watch` | Run E2E tests in watch mode |
 | `npm run test:coverage` | Generate test coverage report |
 | `npm run test:ui` | Open Vitest UI for interactive testing |
 | `npm run prisma:seed` | Seed database with fake data |
+| `npm run prisma:studio` | Open Prisma Studio (database GUI) |
 
+## Testing
+
+The project has comprehensive test coverage with two test suites:
+
+### Unit Tests
+Test business logic in isolation using in-memory repositories:
+
+```bash
+# Run once
+npm test
+
+# Watch mode for TDD
+npm run test:watch
+```
+
+### E2E Tests
+Test the complete HTTP flow with real database:
+
+```bash
+# Run once
+npm run test:e2e
+
+# Watch mode
+npm run test:e2e:watch
+```
+
+### Coverage Report
+
+```bash
+npm run test:coverage
+```
+
+### Interactive Testing UI
+
+```bash
+npm run test:ui
+```
+
+## API Endpoints
+
+### Authentication
+- `POST /auth` - Authenticate user and get JWT token
+
+### Users
+- `POST /users` - Create new user
+- `GET /users/:id` - Get user profile (authenticated)
+- `PATCH /users/:id` - Update user (authenticated, owner or admin)
+- `DELETE /users/:id` - Delete user (authenticated, owner or admin)
+
+### Pages
+- `POST /pages` - Create new page (authenticated)
+- `GET /pages/:id` - Get page by ID (authenticated)
+- `GET /pages/:id/links` - Get all links from a page (authenticated)
+- `PUT /pages/:id` - Update page (authenticated)
+- `DELETE /pages/:id` - Delete page (authenticated)
+
+### Links
+- `GET /links/:id` - Get link by ID
+- `POST /links` - Create new link
+- `PUT /links/:id` - Update link
+- `DELETE /links/:id` - Delete link
 
 ## Prisma Commands
 
@@ -123,23 +184,16 @@ The server runs on `http://localhost:3001` by default.
 | `npx prisma generate` | Generate Prisma Client |
 | `npx prisma db seed` | Run seed script |
 
-## Testing
+## Authentication Flow
 
-The project uses Vitest for testing with coverage support:
-
-```bash
-# Run all tests
-npm test
+1. User registers via `POST /users`
+2. User authenticates via `POST /auth` with email/password
+3. Server returns JWT token
+4. Client includes token in `Authorization: Bearer <token>` header
+5. Protected routes verify token via `authMiddleware`
 
 # Watch mode for TDD
 npm run test:watch
-
-# Generate coverage report
-npm run test:coverage
-
-# Open interactive UI
-npm run test:ui
-```
 
 ## License
 

@@ -1,9 +1,10 @@
-name: 'LinksforAll::Test'
+name: 'LinksforAll::Unit test'
 on:
   pull_request:
 
 jobs:
-  test:
+  unit-test:
+    name: Run Unit tests
     runs-on: ubuntu-latest
 
     permissions:
@@ -16,14 +17,19 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '22.x'
+
     - name: 'Install Deps'
       run: npm install
+
     - name: Set fake DATABASE_URL
       run: echo "DATABASE_URL=\"file:./dev.db\"" >> .env
+
     - name: Generate Prisma Client
       run: npx prisma generate
+
     - name: 'Test'
-      run: npx vitest --coverage.enabled true
+      run: npx vitest --project UNIT --coverage.enabled true
+
     - name: 'Report Coverage'
       if: always()
       uses:  davelosert/vitest-coverage-report-action@v2
