@@ -1,27 +1,16 @@
 # linksforall-api
 
-REST API for managing users, pages, and links with authentication and role-based authorization. Built with **Clean Architecture** principles, following **SOLID** design patterns with comprehensive test coverage.
-
-
-### Key Features
-- ✅ **Modular Controllers**: Each operation in its own file with dedicated tests
-- ✅ **Clean Architecture**: Separation of concerns (controllers → use cases → repositories)
-- ✅ **SOLID Principles**: Dependency injection, single responsibility
-- ✅ **Comprehensive Testing**: Unit tests + E2E tests with Vitest
-- ✅ **Type Safety**: Full TypeScript with Zod validation
-- ✅ **Security**: JWT authentication, bcrypt hashing, role-based access control
+Base REST API for managing users, pages, and links with authentication and role-based authorization. Built with **Clean Architecture** principles, following **SOLID** design patterns with comprehensive test coverage.
 
 ## Tech Stack
 
 - **Runtime**: Node.js (>= 22)
 - **Language**: TypeScript
-- **Framework**: Express 5
-- **Database**: PostgreSQL
-- **ORM**: Prisma
+- **Framework**: Express
+- **Database**: PostgreSQL (ORM: Prisma)
 - **Authentication**: JWT + bcrypt
 - **Validation**: Zod
-- **Testing**: Vitest (Unit + E2E)
-- **Dev Tools**: tsx, ESLint
+- **Testing**: Vitest
 
 ## Quick Start
 
