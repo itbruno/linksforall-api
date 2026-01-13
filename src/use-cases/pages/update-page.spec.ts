@@ -39,7 +39,7 @@ describe('Update pages use case', () => {
       userId: 'user-001',
     });
 
-    expect(updatePageUseCase.execute({
+    await expect(updatePageUseCase.execute({
       id: newPage.id,
       title: 'Bio page',
       description: 'Page for my social media',

@@ -29,6 +29,6 @@ describe('Get page use case', () => {
     const inMemoryPageRepository = new InMemoryPagesRepository();
     const getPageUseCase = new GetPageUseCase(inMemoryPageRepository);
 
-    expect(getPageUseCase.execute('non-created-page-id')).rejects.toBeInstanceOf(ResourceNotFoundError);
+    await expect(getPageUseCase.execute('non-created-page-id')).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

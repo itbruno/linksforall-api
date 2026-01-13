@@ -26,6 +26,6 @@ describe('Delete page use case', () => {
     const inMemoryPageRepository = new InMemoryPagesRepository();
     const deletePageUseCase = new DeletePageUseCase(inMemoryPageRepository);
 
-    expect(deletePageUseCase.execute('non-created-page-id')).rejects.toBeInstanceOf(ResourceNotFoundError);
+    await expect(deletePageUseCase.execute('non-created-page-id')).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

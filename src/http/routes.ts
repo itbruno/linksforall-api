@@ -10,6 +10,7 @@ import { createPageController } from './controllers/pages/create';
 import { getPageController } from './controllers/pages/get-page';
 import { updatePageController } from './controllers/pages/update';
 import { deletePageController } from './controllers/pages/delete';
+import { getPageLinksController } from './controllers/pages/get-links';
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.get('/users/:id', authMiddleware, getUserProfileController);
 // Pages routes
 router.post('/pages', authMiddleware, createPageController);
 router.get('/pages/:id', authMiddleware, getPageController);
+router.get('/pages/:id/links', authMiddleware, getPageLinksController);
 router.put('/pages/:id', authMiddleware, updatePageController);
 router.delete('/pages/:id', authMiddleware, deletePageController);
 
