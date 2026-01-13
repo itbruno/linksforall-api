@@ -1,9 +1,9 @@
 import { PrismaPagesRepository } from '@/repositories/prisma/prisma-pages-repository';
-import { UpdatePageUseCase } from '../pages/update-page';
+import { GetPageLinksUseCase } from '../pages/get-page-links';
 
-export function updatePageUseCase() {
+export function getPageLinksUseCase() {
   const pageRepository = new PrismaPagesRepository();
-  const pageUseCase = new UpdatePageUseCase(pageRepository);
+  const pageUseCase = new GetPageLinksUseCase(pageRepository);
 
   return pageUseCase;
 }

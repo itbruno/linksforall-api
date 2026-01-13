@@ -31,6 +31,19 @@ export class PrismaPagesRepository implements PagesRepository {
     return page;
   }
 
+  async findPageLinks(pageId: string) {
+    const links = await prisma.links.findMany({
+      where: {
+        pageId
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    return links;
+  }
+
   async delete(id: string) {
     await prisma.pages.delete({
       where: {
