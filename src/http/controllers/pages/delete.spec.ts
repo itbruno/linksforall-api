@@ -10,13 +10,13 @@ describe('Delete page test', () => {
   });
 
   it('should be able to delete a page', async () => {
-    const user = await prisma.users.create({
-      data: {
-        fullname: 'Test User',
-        email: 'testuser@linksforall.com',
-        password: '123456'
-      }
+    const userResponse = await request(app).post('/users').send({
+      fullname: 'Test User',
+      email: 'testuser@linksforall.com',
+      password: '123456'
     });
+
+    const user = userResponse.body;
 
     const page = await prisma.pages.create({
       data: {
@@ -48,12 +48,10 @@ describe('Delete page test', () => {
   });
 
   it('should return 404 when trying to delete non-existent page', async () => {
-    const user = await prisma.users.create({
-      data: {
-        fullname: 'Test User',
-        email: 'testuser@linksforall.com',
-        password: '123456'
-      }
+    await request(app).post('/users').send({
+      fullname: 'Test User',
+      email: 'testuser@linksforall.com',
+      password: '123456'
     });
 
     const authResponse = await request(app).post('/auth').send({

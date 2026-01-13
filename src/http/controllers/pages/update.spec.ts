@@ -10,13 +10,13 @@ describe('Update page test', () => {
   });
 
   it('should be able to update a page', async () => {
-    const user = await prisma.users.create({
-      data: {
-        fullname: 'Test User',
-        email: 'testuser@linksforall.com',
-        password: '123456'
-      }
+    const userResponse = await request(app).post('/users').send({
+      fullname: 'Test User',
+      email: 'testuser@linksforall.com',
+      password: '123456'
     });
+
+    const user = userResponse.body;
 
     const page = await prisma.pages.create({
       data: {
@@ -48,13 +48,13 @@ describe('Update page test', () => {
   });
 
   it('should return 409 when trying to update to an existing slug', async () => {
-    const user = await prisma.users.create({
-      data: {
-        fullname: 'Test User',
-        email: 'testuser@linksforall.com',
-        password: '123456'
-      }
+    const userResponse = await request(app).post('/users').send({
+      fullname: 'Test User',
+      email: 'testuser@linksforall.com',
+      password: '123456'
     });
+
+    const user = userResponse.body;
 
     await prisma.pages.create({
       data: {
@@ -65,13 +65,13 @@ describe('Update page test', () => {
       }
     });
 
-    const anotherUser = await prisma.users.create({
-      data: {
-        fullname: 'Another User',
-        email: 'anotheruser@linksforall.com',
-        password: '123456'
-      }
+    const anotherUserResponse = await request(app).post('/users').send({
+      fullname: 'Another User',
+      email: 'anotheruser@linksforall.com',
+      password: '123456'
     });
+
+    const anotherUser = anotherUserResponse.body;
 
     const page = await prisma.pages.create({
       data: {

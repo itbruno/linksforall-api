@@ -10,13 +10,13 @@ describe('Get page test', () => {
   });
 
   it('should be able to get a page by id', async () => {
-    const user = await prisma.users.create({
-      data: {
-        fullname: 'Test User',
-        email: 'testuser@linksforall.com',
-        password: '123456'
-      }
+    const userResponse = await request(app).post('/users').send({
+      fullname: 'Test User',
+      email: 'testuser@linksforall.com',
+      password: '123456'
     });
+
+    const user = userResponse.body;
 
     const page = await prisma.pages.create({
       data: {
@@ -44,12 +44,10 @@ describe('Get page test', () => {
   });
 
   it('should return 404 when page does not exist', async () => {
-    await prisma.users.create({
-      data: {
-        fullname: 'Test User',
-        email: 'testuser@linksforall.com',
-        password: '123456'
-      }
+    await request(app).post('/users').send({
+      fullname: 'Test User',
+      email: 'testuser@linksforall.com',
+      password: '123456'
     });
 
     const authResponse = await request(app).post('/auth').send({
