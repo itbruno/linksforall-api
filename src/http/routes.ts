@@ -1,4 +1,3 @@
-import LinkController from '@/http/controllers/links-controller';
 import { authMiddleware } from '@/middlewares/auth-middleware';
 import { Router } from 'express';
 import { authenticateUserController } from './controllers/users/authenticate';
@@ -11,6 +10,10 @@ import { getPageController } from './controllers/pages/get-page';
 import { updatePageController } from './controllers/pages/update';
 import { deletePageController } from './controllers/pages/delete';
 import { getPageLinksController } from './controllers/pages/get-links';
+import { getLinkController } from './controllers/links/show';
+import { createLinkController } from './controllers/links/create';
+import { updateLinkController } from './controllers/links/update';
+import { deleteLinkController } from './controllers/links/delete';
 
 const router = Router();
 
@@ -28,10 +31,10 @@ router.put('/pages/:id', authMiddleware, updatePageController);
 router.delete('/pages/:id', authMiddleware, deletePageController);
 
 // Links routes
-router.get('/links/:id', LinkController.show);
-router.post('/links', LinkController.store);
-router.put('/links/:id', LinkController.update);
-router.delete('/links/:id', LinkController.delete);
+router.get('/links/:id', getLinkController);
+router.post('/links', createLinkController);
+router.put('/links/:id', updateLinkController);
+router.delete('/links/:id', deleteLinkController);
 
 // Auth
 router.post('/auth', authenticateUserController);
